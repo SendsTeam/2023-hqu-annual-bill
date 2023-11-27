@@ -1,0 +1,34 @@
+/* 这里写一些公用的 */
+
+/* 清除默认样式 */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* 让界面居中 */
+body{
+    width: 100vw;
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 移动端 */
+@media (max-width: 576px) {
+    #app {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* 桌面端 */
+@media (min-width: 576px) {
+    #app {
+        width: 576px;
+        /* height: 900px; */
+        height: 100%;
+    }
+}

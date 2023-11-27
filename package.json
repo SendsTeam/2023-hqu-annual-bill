@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port=80 --host",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,7 +12,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "axios": "^1.6.2",
+    "html2canvas": "^1.4.1",
+    "naive-ui": "^2.35.0",
+    "normalize.css": "^8.0.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"

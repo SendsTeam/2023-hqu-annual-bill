@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import HomeView from './views/Home-View.vue'
+</script>
 
 <template>
-    <div></div>
+    <HomeView />
 </template>
 
 <style scoped></style>
