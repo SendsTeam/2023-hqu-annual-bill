@@ -1,0 +1,48 @@
+default:
+  image: node:latest
+stages:
+  - build
+  - deploy
+# - flushcache
+
+cache:
+  paths:
+    - ./node_modules/
+
+build:
+  stage: build
+  script:
+    - npm i -g pnpm
+    - pnpm install --no-frozen-lockfile
+    - pnpm run build 
+    - sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+    - apt update && apt install zip
+    - zip -r dist.zip ./dist/
+  artifacts:
+    paths:
+      - ./dist.zip
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+    - apk update && apk add openssh-client rsync unzip
+    - unzip dist.zip
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh-keyscan -p 4242 hidden >> ~/.ssh/known_hosts
+  script:
+    - rsync -e 'ssh -p 4242' -atv --delete --progress ./dist  ubuntu@hidden:/home/ubuntu/tmp/2023_annual_statement
+    - ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfronted.sh
+
+
+# flushcache:
+#   stage: flushcache
+#   image: python:alpine
+#   script:
+#     - cd python-flushcache
+#     - python -m pip install -r requirements.txt
+#     - python main.py
