@@ -27,13 +27,13 @@ deploy:
   image: alpine:latest
   before_script:
     - sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-    - apk update && apk add openssh-client rsync unzip 
+    - apk update && apk add openssh-client rsync unzip openssl
     - unzip dist.zip
     - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\nPubkeyAcceptedKeyTypes +ssh-rsa\n
       HostKeyAlgorithms=+ssh-rsa\n\n" > ~/.ssh/config'
     - echo "$SSH_PRIVATE_KEY" | ssh-add -
-    - mkdir -p ~/.ssh
     - ssh-keyscan -p 4242 hidden >> ~/.ssh/known_hosts
   script:
     - rsync -e 'ssh -p 4242' -atv --delete --progress ./dist  ubuntu@hidden:/home/ubuntu/tmp/2023_annual_statement
