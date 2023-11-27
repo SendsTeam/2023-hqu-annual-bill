@@ -30,7 +30,7 @@ export function useGradationElement<T extends HTMLElement>(
         //关闭已有的定时器
         clearInterval(intervalId)
         intervalId = setInterval(() => {
-            const value = Number(el.style.opacity)
+            const value = parseFloat(el.style.opacity)
             //根据当前的值决定方向
             if (value <= 0) {
                 direction = 'up'

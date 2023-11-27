@@ -46,6 +46,7 @@ onUnmounted(() => {
         font-family: '楷体';
         color: #9ca3af;
         font-size: 24px;
+        cursor:pointer;
     }
 }
 .xiamen {
