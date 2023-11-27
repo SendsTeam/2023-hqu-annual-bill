@@ -50,7 +50,6 @@ onUnmounted(() => {
     }
 }
 .xiamen {
-    background-image: url('@/assets/img/home/home-xiamen.jpg');
     background-size: contain;
     background-repeat: no-repeat;
 }
