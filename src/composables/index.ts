@@ -1,10 +1,7 @@
 import { onMounted, onUnmounted } from 'vue'
 
 //绑定屏幕触摸事件:点击继续
-export function useScreenTouchEventListener() {
-    const next = () => {
-        alert(1)
-    }
+export function useScreenTouchEventListener(next:()=>void) {
     //这里保证了生命周期函数调用栈是同步的
     onMounted(() => {
         document.addEventListener('click', next)

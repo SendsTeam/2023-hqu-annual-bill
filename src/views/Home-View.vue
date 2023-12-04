@@ -9,8 +9,13 @@ import { useScreenTouchEventListener } from '@/composables/index'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { type Campus } from '@/models/modules/user/type/index'
 import { useGradationElement } from '../composables/index'
+// import router from '@/router'
+import { useRouter } from 'vue-router'
 //监听屏幕触摸
-useScreenTouchEventListener()
+const router = useRouter()
+useScreenTouchEventListener(() => {
+    router.push('/dormitory')
+})
 
 //判断是哪个校区的,展示不同的背景图
 const campas = ref<Campus>('quanzhou')
@@ -46,7 +51,7 @@ onUnmounted(() => {
         font-family: '楷体';
         color: #9ca3af;
         font-size: 24px;
-        cursor:pointer;
+        cursor: pointer;
     }
 }
 .xiamen {
