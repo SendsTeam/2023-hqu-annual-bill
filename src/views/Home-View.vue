@@ -1,5 +1,6 @@
 <template>
     <div id="home-container" :class="campas">
+        <img src="@/assets/img/home/home-xiamen.jpg" />
         <h2 id="tip" ref="tipRef" style="opacity: 1">点击任意处继续</h2>
     </div>
 </template>
@@ -8,17 +9,16 @@
 import { useScreenTouchEventListener } from '@/composables/index'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { type Campus } from '@/models/modules/user/type/index'
-import { useGradationElement } from '../composables/index'
-// import router from '@/router'
-import { useRouter } from 'vue-router'
+import { useGradationElement } from '@/composables/index'
+import router from '@/router'
+
 //监听屏幕触摸
-const router = useRouter()
 useScreenTouchEventListener(() => {
     router.push('/dormitory')
 })
 
 //判断是哪个校区的,展示不同的背景图
-const campas = ref<Campus>('quanzhou')
+const campas = ref<Campus>('xiamen')
 
 //颜色渐变
 //先获取模板引用
@@ -54,13 +54,25 @@ onUnmounted(() => {
         cursor: pointer;
     }
 }
-.xiamen {
-    background-size: contain;
-    background-repeat: no-repeat;
+
+img {
+    width: 100%;
+    height: 100%;
+    // position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 }
-.quanzhou {
-    background-image: url('@/assets/img/home/home-quanzhou.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-}
+// .xiamen {
+//     background-image: url('@/assets/img/home/home-xiamen.jpg');
+//     background-size: contain;
+//     background-repeat: no-repeat;
+// }
+// .quanzhou {
+//     background-image: url('@/assets/img/home/home-quanzhou.jpg');
+//     background-size: contain;
+//     background-repeat: no-repeat;
+// }
 </style>
