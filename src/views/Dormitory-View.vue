@@ -34,6 +34,12 @@
                 class="animate__animated animate__fadeIn"
                 src="@/assets/img/cartoon/dormitory/dormitory-06.png"
             />
+            <img
+                v-show="visiableIndex >= 7"
+                class="animate__animated animate__fadeIn"
+                src="@/assets/img/cartoon/dormitory/dormitory-07.png"
+                style="z-index: 1"
+            />
         </cartoon-player>
     </div>
 </template>
@@ -48,6 +54,7 @@ import CartoonPlayer from '@/components/Cartoon-Player.vue'
     height: 100%;
     box-sizing: border-box;
 }
+/* 为了方便img请写在调用方! */
 img {
     height: 110%;
     position: absolute;
