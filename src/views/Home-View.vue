@@ -9,11 +9,11 @@
 import { useScreenTouchEventListener } from '@/composables/index'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { type Campus } from '@/models/modules/user/type/index'
-import { useGradationElement } from '@/composables/index'
+import { useGradation } from '@/composables/index'
 import router from '@/router'
 
 //监听屏幕触摸
-useScreenTouchEventListener(() => {
+useScreenTouchEventListener(document.body, () => {
     router.push({ name: 'dormitory' })
 })
 
@@ -23,16 +23,16 @@ const campas = ref<Campus>('xiamen')
 //颜色渐变
 //先获取模板引用
 const tipRef = ref(null)
-let closeGradationFunc: () => void
+let stopGradationFunc: () => void
 onMounted(() => {
     if (tipRef.value) {
-        const { gradation, closeGradation } = useGradationElement(tipRef.value)
+        const { gradation, stopGradation } = useGradation<HTMLHeadingElement>(tipRef.value)
         gradation()
-        closeGradationFunc = closeGradation
+        stopGradationFunc = stopGradation
     }
 })
 onUnmounted(() => {
-    closeGradationFunc()
+    stopGradationFunc()
 })
 </script>
 

@@ -54,7 +54,7 @@ const isCartoonReady = ref(false)
 const unlockNextRoute = () => {
     isCartoonReady.value = true
 }
-useScreenTouchEventListener(() => {
+useScreenTouchEventListener(document.body, () => {
     if (isCartoonReady.value) {
         router.push({ name: 'classroom' })
     } else {
