@@ -1,59 +1,69 @@
 <template>
-    <div id="dormitory-container">
-        <cartoon-player v-slot="{ visiableIndex }">
-            <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
-            <img
-                v-show="visiableIndex >= 1"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-01.png"
-            />
-            <img
-                v-show="visiableIndex >= 2"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-02.png"
-            />
-            <img
-                v-show="visiableIndex >= 3"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-03.png"
-            />
-            <img
-                v-show="visiableIndex >= 4"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-04.png"
-                style="z-index: 1"
-            />
-            <img
-                v-show="visiableIndex >= 5"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-05.png"
-                style="z-index: 1"
-            />
-            <img
-                v-show="visiableIndex >= 6"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-06.png"
-            />
-            <img
-                v-show="visiableIndex >= 7"
-                class="animate__animated animate__fadeIn"
-                src="@/assets/img/cartoon/dormitory/dormitory-07.png"
-                style="z-index: 1"
-            />
-        </cartoon-player>
-    </div>
+    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNextRoute" :max-index="1">
+        <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
+        <img
+            v-show="visiableIndex >= 1"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-01.png"
+        />
+        <img
+            v-show="visiableIndex >= 2"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-02.png"
+        />
+        <img
+            v-show="visiableIndex >= 3"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-03.png"
+        />
+        <img
+            v-show="visiableIndex >= 4"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-04.png"
+            style="z-index: 1"
+        />
+        <img
+            v-show="visiableIndex >= 5"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-05.png"
+            style="z-index: 1"
+        />
+        <img
+            v-show="visiableIndex >= 6"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-06.png"
+        />
+        <img
+            v-show="visiableIndex >= 7"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-07.png"
+            style="z-index: 1"
+        />
+    </cartoon-player>
 </template>
 
 <script setup lang="ts">
 import CartoonPlayer from '@/components/Cartoon-Player.vue'
+import { useScreenTouchEventListener } from '@/composables/index'
+import router from '@/router'
+import { ref } from 'vue'
+
+//等动画播放完再开放路由
+const isCartoonReady = ref(false)
+//解锁路由
+const unlockNextRoute = () => {
+    isCartoonReady.value = true
+}
+useScreenTouchEventListener(() => {
+    if (isCartoonReady.value) {
+        router.push({ name: 'classroom' })
+    } else {
+        //TODO: 这里可以加个提示啥的
+    }
+})
 </script>
 
 <style scoped>
-#dormitory-container {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
 /* 为了方便img请写在调用方! */
 img {
     height: 110%;

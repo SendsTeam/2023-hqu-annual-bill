@@ -14,7 +14,7 @@ import router from '@/router'
 
 //监听屏幕触摸
 useScreenTouchEventListener(() => {
-    router.push('/dormitory')
+    router.push({ name: 'dormitory' })
 })
 
 //判断是哪个校区的,展示不同的背景图

@@ -6,6 +6,7 @@ import { IsPC } from '@/util/index'
 useStatusStore().isPC = IsPC()
 //默认指向HomeView路由
 router.replace('/')
+
 </script>
 
 <template>
