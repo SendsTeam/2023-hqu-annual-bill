@@ -1,18 +1,3 @@
-import { onMounted, onUnmounted } from 'vue'
-
-//绑定屏幕触摸事件:点击继续
-export function useScreenTouchEventListener(el: HTMLElement = document.body, next: () => void) {
-    //这里保证了生命周期函数调用栈是同步的
-    onMounted(() => {
-        el.addEventListener('click', next)
-    })
-    onUnmounted(() => {
-        el.removeEventListener('click', next)
-    })
-
-    return {}
-}
-
 //透明渐变:支持三种模式:逐渐显现,逐渐消失,来回消失显现
 export function useGradation<T extends HTMLElement>(
     el: T, //目标元素

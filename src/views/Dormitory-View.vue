@@ -1,5 +1,5 @@
 <template>
-    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNextRoute" :max-index="1">
+    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNext" @click="next" :max-index="1">
         <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
         <img
             v-show="visiableIndex >= 1"
@@ -44,23 +44,23 @@
 
 <script setup lang="ts">
 import CartoonPlayer from '@/components/Cartoon-Player.vue'
-import { useScreenTouchEventListener } from '@/composables/index'
 import router from '@/router'
 import { ref } from 'vue'
 
 //等动画播放完再开放路由
 const isCartoonReady = ref(false)
 //解锁路由
-const unlockNextRoute = () => {
+const unlockNext = () => {
     isCartoonReady.value = true
 }
-useScreenTouchEventListener(document.body, () => {
+//下一个界面
+const next = () => {
     if (isCartoonReady.value) {
         router.push({ name: 'classroom' })
     } else {
         //TODO: 这里可以加个提示啥的
     }
-})
+}
 </script>
 
 <style scoped>

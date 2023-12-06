@@ -1,5 +1,10 @@
 <template>
-    <cartoon-player v-slot="{ visiableIndex }" :max-index="6">
+    <cartoon-player
+        v-slot="{ visiableIndex }"
+        :effect="unlockNextRoute"
+        @click="nextRoute"
+        :max-index="6"
+    >
         <img
             v-show="visiableIndex >= 1"
             class="animate__animated animate__fadeIn"
@@ -59,7 +64,22 @@
 
 <script setup lang="ts">
 import CartoonPlayer from '@/components/Cartoon-Player.vue'
+import router from '@/router'
 import { NStatistic, NNumberAnimation } from 'naive-ui'
+import { ref } from 'vue'
+//等动画播放完再开放路由
+const isCartoonReady = ref(false)
+//解锁路由
+const unlockNextRoute = () => {
+    isCartoonReady.value = true
+}
+const nextRoute = () => {
+    if (isCartoonReady.value) {
+        router.push({ name: 'library' })
+    } else {
+        //TODO: 这里可以加个提示啥的
+    }
+}
 </script>
 
 <style scoped>
