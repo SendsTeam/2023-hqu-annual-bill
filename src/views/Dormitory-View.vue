@@ -57,8 +57,6 @@ const unlockNext = () => {
 const next = () => {
     if (isCartoonReady.value) {
         router.push({ name: 'classroom' })
-    } else {
-        //TODO: 这里可以加个提示啥的
     }
 }
 </script>

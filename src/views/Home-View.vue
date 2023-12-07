@@ -1,14 +1,14 @@
 <template>
     <div id="home-container" ref="containerRef" :class="campas" @click="next">
         <img src="@/assets/img/home/home-xiamen.jpg" />
-        <h2 id="tip" ref="tipRef" style="opacity: 1">点击任意处继续</h2>
+        <fade-transition id="tip">点击任意处继续!</fade-transition>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { ref } from 'vue'
 import { type Campus } from '@/models/modules/user/type/index'
-import { useGradation } from '@/composables/index'
+import FadeTransition from '@/components/Fade-Transition.vue'
 import router from '@/router'
 
 //判断是哪个校区的,展示不同的背景图
@@ -18,17 +18,6 @@ const campas = ref<Campus>('xiamen')
 const next = () => {
     router.push({ name: 'dormitory' })
 }
-
-//颜色渐变
-//先获取模板引用
-const tipRef = ref(null)
-onMounted(() => {
-    if (tipRef.value) {
-        //处理渐变
-        const { gradation } = useGradation<HTMLHeadingElement>(tipRef.value)
-        gradation()
-    }
-})
 </script>
 
 <style scoped lang="less">
@@ -46,6 +35,7 @@ onMounted(() => {
         font-family: '楷体';
         color: #9ca3af;
         font-size: 24px;
+        font-weight: bold;
         cursor: pointer;
     }
 }

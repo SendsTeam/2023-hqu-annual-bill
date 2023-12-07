@@ -3,7 +3,7 @@
         v-slot="{ visiableIndex }"
         :effect="unlockNextRoute"
         @click="nextRoute"
-        :max-index="6"
+        :max-index="11"
     >
         <img
             v-show="visiableIndex >= 1"

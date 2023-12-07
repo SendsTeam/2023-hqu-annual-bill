@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useStatusStore = defineStore('StatusStore', {
     state: (): I_StatusStoreState => ({
+        hasConfigured: false,
         currentPage: 'Home',
         isPC: false
     })
