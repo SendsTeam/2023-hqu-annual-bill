@@ -22,17 +22,12 @@ const next = () => {
 //颜色渐变
 //先获取模板引用
 const tipRef = ref(null)
-let stopGradationFunc: () => void
 onMounted(() => {
     if (tipRef.value) {
         //处理渐变
-        const { gradation, stopGradation } = useGradation<HTMLHeadingElement>(tipRef.value)
+        const { gradation } = useGradation<HTMLHeadingElement>(tipRef.value)
         gradation()
-        stopGradationFunc = stopGradation
     }
-})
-onUnmounted(() => {
-    stopGradationFunc()
 })
 </script>
 
