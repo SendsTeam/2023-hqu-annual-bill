@@ -1,5 +1,5 @@
 <template>
-    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNext" @click="next" :max-index="1">
+    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNext" @click="next" :max-index="8">
         <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
         <img
             v-show="visiableIndex >= 1"
@@ -57,8 +57,6 @@ const unlockNext = () => {
 const next = () => {
     if (isCartoonReady.value) {
         router.push({ name: 'classroom' })
-    } else {
-        //TODO: 这里可以加个提示啥的
     }
 }
 </script>

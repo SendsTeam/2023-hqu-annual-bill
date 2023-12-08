@@ -1,0 +1,174 @@
+<template>
+    <n-layout>
+        <n-layout-header>
+            <n-space vertical>
+                <h2>✨欢迎来到年度账单✨</h2>
+                <n-divider></n-divider>
+                <p>在开始前,需要一些设置来确保你的体验</p>
+                <p>在你配置完之后,配置信息将被保存</p>
+                <p>再次访问年度账单将不会再出现这个界面</p>
+                <p>但你仍然可以在设置里更改相关选项</p>
+                <img src="@/assets/gif/chiikawa.png" />
+            </n-space>
+        </n-layout-header>
+        <!-- <n-divider /> -->
+        <n-layout-content>
+            <n-space vertical>
+                <n-list>
+                    <template #header> <h2>配置</h2> </template>
+                    <n-list-item>
+                        <n-card :bordered="false" title="1. 校区">
+                            <n-space>
+                                <n-radio
+                                    :checked="settingStore.campus === 'xiamen'"
+                                    label="厦门校区"
+                                    value="xiamen"
+                                    @change="changeCampus"
+                                />
+                                <n-radio
+                                    :checked="settingStore.campus === 'quanzhou'"
+                                    label="泉州校区"
+                                    value="quanzhou"
+                                    @change="changeCampus"
+                                />
+                                <n-radio
+                                    :checked="settingStore.campus === 'huawen'"
+                                    label="华文校区"
+                                    value="huawen"
+                                    @change="changeCampus"
+                                />
+                            </n-space>
+                        </n-card>
+                    </n-list-item>
+                    <n-list-item>
+                        <n-card :bordered="false" title="2. BGM">
+                            <n-switch v-model:value="settingStore.bgm">
+                                <template #checked> 非常好BGM! </template>
+                                <template #unchecked> 真的不听听吗 </template>
+                            </n-switch>
+                        </n-card>
+                    </n-list-item>
+                    <n-list-item>
+                        <n-card :bordered="false" title="3. 漫画播放">
+                            <n-space>
+                                <n-space>
+                                    <p>自动播放</p>
+                                    <n-switch
+                                        :round="false"
+                                        v-model:value="settingStore.cartoon.autoPlay"
+                                    />
+                                </n-space>
+                                <n-space></n-space>
+                                <n-space>
+                                    <p>重复播放</p>
+                                    <n-switch
+                                        :round="false"
+                                        v-model:value="settingStore.cartoon.repeatPlay"
+                                    />
+                                </n-space>
+                            </n-space>
+                        </n-card>
+                    </n-list-item>
+                    <n-list-item>
+                        <n-card :bordered="false" title="4. 彩蛋">
+                            <n-space vertical>
+                                <n-switch
+                                    :round="false"
+                                    v-model:value="settingStore.egg"
+                                    @update-value="openEgg"
+                                >
+                                    <template #checked> 玩的开心🥳 </template>
+                                    <template #unchecked> 原汁原味 </template>
+                                </n-switch>
+                                <img v-show="msgCount >= 50" src="@/assets/img/egg/trophy.png" />
+                            </n-space>
+                        </n-card>
+                    </n-list-item>
+                </n-list>
+            </n-space>
+        </n-layout-content>
+        <n-layout-footer>
+            <!-- 这里应该根据用户选择的选项来展示信息 -->
+            eg:一个需要bgm的泉州校区选手即将入场
+        </n-layout-footer>
+    </n-layout>
+</template>
+
+<script setup lang="ts">
+import { useSettingStore } from '@/stores/modules/setting'
+import {
+    NLayout,
+    NLayoutHeader,
+    NLayoutContent,
+    NLayoutFooter,
+    NSpace,
+    NDivider,
+    NSwitch,
+    NCard,
+    NList,
+    NListItem,
+    NRadio,
+    useMessage
+} from 'naive-ui'
+import { ref } from 'vue'
+
+//获取settingStore,让这里的配置直接同步Store!
+const settingStore = useSettingStore()
+//校区
+//#region
+//改变选项的callback
+const changeCampus = (e: Event) => {
+    settingStore.campus = (e.target as HTMLInputElement).value
+}
+//#endregion
+
+//开启彩蛋
+//#region
+//第一个彩蛋!
+const message = useMessage()
+let msgCount = ref(0)
+const openEgg = (value: boolean) => {
+    if (msgCount.value === 10) {
+        message.destroyAll()
+        message.error('???你真的这么闲吗???')
+        msgCount.value++
+        return
+    }
+    if (msgCount.value === 20) {
+        message.destroyAll()
+        message.error('别点了,这里真的没彩蛋!')
+        msgCount.value++
+        return
+    }
+    //我去,不会真的有人点50次吧!
+    if (msgCount.value === 50) {
+        message.destroyAll()
+        message.error('好好好,这么玩是吧')
+        msgCount.value++
+        return
+    }
+
+    if (value && msgCount.value < 50) {
+        message.success('Something has changed!', {
+            duration: 1000
+        })
+        msgCount.value++
+    }
+}
+//#endregion
+</script>
+
+<style lang="less" scoped>
+.n-layout-header {
+    padding: 20px;
+    p {
+        color: grey;
+    }
+}
+.n-layout-content {
+    padding: 20px;
+}
+.n-layout-footer {
+    padding: 20px;
+}
+</style>

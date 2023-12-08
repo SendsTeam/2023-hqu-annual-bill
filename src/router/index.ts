@@ -9,6 +9,11 @@ const router = createRouter({
             component: () => import('../views/Home-View.vue') //路由懒加载
         },
         {
+            path: '/configure',
+            name: 'configure',
+            component: () => import('../views/Configure-View.vue') 
+        },
+        {
             path: '/cartoon/dormitory',
             name: 'dormitory',
             component: () => import('../views/Dormitory-View.vue')
