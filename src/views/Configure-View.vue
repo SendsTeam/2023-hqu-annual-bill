@@ -42,10 +42,17 @@
                     </n-list-item>
                     <n-list-item>
                         <n-card :bordered="false" title="2. BGM">
-                            <n-switch v-model:value="settingStore.bgm">
-                                <template #checked> 非常好BGM! </template>
-                                <template #unchecked> 真的不听听吗 </template>
-                            </n-switch>
+                            <n-space vertical>
+                                <n-switch v-model:value="settingStore.bgm">
+                                    <template #checked> 非常好BGM! </template>
+                                    <template #unchecked> 真的不听听吗 </template>
+                                </n-switch>
+                                <img
+                                    v-show="settingStore.bgm"
+                                    src="@/assets/gif/chiikawa-02.jpg"
+                                    style="width: 40%"
+                                />
+                            </n-space>
                         </n-card>
                     </n-list-item>
                     <n-list-item>
@@ -84,17 +91,26 @@
                             </n-space>
                         </n-card>
                     </n-list-item>
+                    <template #footer>
+                        <n-space>
+                            <n-button type="primary" dashed>年度账单!</n-button>
+                            <n-button type="primary" @click="start">启动</n-button>
+                        </n-space>
+                    </template>
                 </n-list>
             </n-space>
         </n-layout-content>
+
         <n-layout-footer>
             <!-- 这里应该根据用户选择的选项来展示信息 -->
-            eg:一个需要bgm的泉州校区选手即将入场
+            <p>{{ footerInfo }}</p>
         </n-layout-footer>
     </n-layout>
 </template>
 
 <script setup lang="ts">
+import type { Campus } from '@/models/modules/user/type'
+import router from '@/router'
 import { useSettingStore } from '@/stores/modules/setting'
 import {
     NLayout,
@@ -108,9 +124,10 @@ import {
     NList,
     NListItem,
     NRadio,
-    useMessage
+    useMessage,
+    NButton
 } from 'naive-ui'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 //获取settingStore,让这里的配置直接同步Store!
 const settingStore = useSettingStore()
@@ -118,13 +135,14 @@ const settingStore = useSettingStore()
 //#region
 //改变选项的callback
 const changeCampus = (e: Event) => {
-    settingStore.campus = (e.target as HTMLInputElement).value
+    settingStore.campus = (e.target as HTMLInputElement).value as Campus
 }
 //#endregion
 
 //开启彩蛋
 //#region
 //第一个彩蛋!
+//TODO: 后续可以把彩蛋的逻辑封装成组合式函数
 const message = useMessage()
 let msgCount = ref(0)
 const openEgg = (value: boolean) => {
@@ -154,6 +172,51 @@ const openEgg = (value: boolean) => {
         })
         msgCount.value++
     }
+}
+//#endregion
+
+//Footer计算显示用户信息
+const footerInfo = computed(() => {
+    if (msgCount.value >= 50) {
+        return '第一个彩蛋!'
+    }
+    switch (settingStore.campus) {
+        case 'xiamen':
+            return '非常好账单,爱来自厦门校区'
+        case 'quanzhou':
+            return '非常好账单,爱来自泉州校区'
+        case 'huawen':
+            return '非常好账单,爱来自华文校区'
+        default:
+            return ''
+    }
+})
+
+//进入Home界面
+//#region
+//检查配置是否已经完成配置
+const check = () => {
+    //这里其实只有校区是需要检查的
+    if (!settingStore.campus) {
+        message.error('你还没选择校区呢!', {
+            duration: 1000
+        })
+        return false
+    } else {
+        return true
+    }
+}
+//记录信息
+const recordSetting = () => {
+    localStorage.setItem('setting', JSON.stringify(settingStore.$state))
+}
+//进入主界面
+const start = () => {
+    if (!check()) {
+        return
+    }
+    recordSetting()
+    router.replace({ name: 'home' })
 }
 //#endregion
 </script>

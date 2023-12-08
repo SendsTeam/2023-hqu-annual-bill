@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import type { I_SettingStoreState } from '@/models/modules/store/setting/interface/index'
 
 export const useSettingStore = defineStore('SettingStore', {
-    state: () => ({
+    state: (): I_SettingStoreState => ({
         //校区
         campus: '',
         //是否需要BGM
