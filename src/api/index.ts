@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getFormattedTime } from '../util/index'
 import {
     type I_LearningStatistic,
     type I_PaymentStatistic
@@ -12,20 +13,28 @@ class _API {
         baseURL: `${baseUrl}/yearBill/`
     })
     //登陆
-    public async login(code: string): Promise<string> {
+    public async login(code: string): Promise<{
+        token: string
+        avatar: string
+        nickName: string
+    } | null> {
         try {
             const { data } = await this._userAPI.post('bill_login', {
                 code
             })
             if (data.code === 1000) {
-                return data.data
+                return {
+                    token: data.data.token,
+                    avatar: data.data.avatar,
+                    nickName: data.data.nick_name
+                }
             } else {
-                alert(`something was wrong! ${data.msg}`)
-                return ''
+                alert(`登陆失败! ${data.msg}`)
+                return null
             }
         } catch (error) {
-            alert(`something was wrong! ${error}`)
-            return ''
+            alert(`登陆失败! ${error}`)
+            return null
         }
     }
     //!初始化用户数据 必须要初始化之后才能拿到数据
@@ -43,10 +52,10 @@ class _API {
                 if (data.code === 1000) {
                     localStorage.setItem('isInitialized', 'true')
                 } else {
-                    alert(`something was wrong! ${data.msg}`)
+                    alert(`初始化用户失败! ${data.msg}`)
                 }
             } catch (error) {
-                alert(`something was wrong! ${error}`)
+                alert(`初始化用户失败! ${error}`)
             }
         }
     }
@@ -62,13 +71,31 @@ class _API {
                     }
                 })
                 if (data.code === 1000) {
-                    return data.data as I_PaymentStatistic
+                    const origin = data.data //别名原始数据
+
+                    //解析调整数据
+                    const paymentStatistic: I_PaymentStatistic = {
+                        restaurant: {
+                            favorite: {
+                                name: origin.favorite_restaurant,
+                                total: origin.favorite_restaurant_pay
+                            },
+                            total: origin.restaurant_pay,
+                            //这里要格式化时间
+                            earliestTime: getFormattedTime(origin.earlyTime.seconds),
+                            latestTime: getFormattedTime(origin.lastTime.seconds)
+                        },
+                        other: {
+                            total: origin.other_pay
+                        }
+                    }
+                    return paymentStatistic
                 } else {
-                    alert(`something was wrong! ${data.msg}`)
+                    alert(`获取支付流水数据失败! ${data.msg}`)
                     return null
                 }
             } catch (error) {
-                alert(`something was wrong! ${error}`)
+                alert(`获取支付流水数据失败! ${error}`)
                 return null
             }
         }
@@ -85,13 +112,25 @@ class _API {
                     }
                 })
                 if (data.code === 1000) {
-                    return data.data as I_LearningStatistic
+                    const origin = data.data
+                    const learningStatistic: I_LearningStatistic = {
+                        lesson: {
+                            morningEight: origin.eight ? origin.eight : 0,
+                            eveningTen: origin.eveningTen ? origin.eveningTen : 0,
+                            total: origin.sum_lesson,
+                            most: {
+                                name: origin.most_course,
+                                total: origin.most
+                            }
+                        }
+                    }
+                    return learningStatistic
                 } else {
-                    alert(`something was wrong! ${data.msg}`)
+                    alert(`获取学习数据失败! ${data.msg}`)
                     return null
                 }
             } catch (error) {
-                alert(`something was wrong! ${error}`)
+                alert(`获取学习数据失败! ${error}`)
                 return null
             }
         }

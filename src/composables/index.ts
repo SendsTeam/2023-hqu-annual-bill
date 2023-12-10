@@ -205,7 +205,8 @@ export function useAudio(
         toggleHook?: () => void //切换音频状态触发的hook
     } = {}
 ) {
-    const { name = 'bgm1.mp3', src = '/src/assets/audio/', toggleHook } = options
+    // 静态资源默认会被指向public文件夹
+    const { name = 'bgm1.mp3', src = './audio/', toggleHook } = options
 
     //使用js控制音频
     const audio = new Audio(src + name)

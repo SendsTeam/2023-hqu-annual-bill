@@ -91,10 +91,17 @@
                             </n-space>
                         </n-card>
                     </n-list-item>
+                    <n-list-item>
+                        <n-card :bordered="false" title="5. 进度条">
+                            <loading-step @finished="() => (isDataReady = true)" />
+                        </n-card>
+                    </n-list-item>
                     <template #footer>
                         <n-space>
                             <n-button type="primary" dashed>年度账单!</n-button>
-                            <n-button type="primary" @click="start">启动</n-button>
+                            <n-button type="primary" :disabled="!isDataReady" @click="start"
+                                >启动</n-button
+                            >
                         </n-space>
                     </template>
                 </n-list>
@@ -109,6 +116,7 @@
 </template>
 
 <script setup lang="ts">
+import LoadingStep from '@/components/Loading-Step.vue'
 import type { Campus } from '@/models/modules/user/type'
 import router from '@/router'
 import { useSettingStore } from '@/stores/modules/setting'
@@ -176,6 +184,7 @@ const openEgg = (value: boolean) => {
 //#endregion
 
 //Footer计算显示用户信息
+//#region
 const footerInfo = computed(() => {
     if (msgCount.value >= 50) {
         return '第一个彩蛋!'
@@ -191,6 +200,7 @@ const footerInfo = computed(() => {
             return ''
     }
 })
+//#endregion
 
 //进入Home界面
 //#region
@@ -206,6 +216,8 @@ const check = () => {
         return true
     }
 }
+//检查是否已经准备好数据
+const isDataReady = ref(false)
 //记录信息
 const recordSetting = () => {
     localStorage.setItem('setting', JSON.stringify(settingStore.$state))
