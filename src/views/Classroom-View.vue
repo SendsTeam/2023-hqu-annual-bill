@@ -38,7 +38,10 @@
                 <n-statistic label="你一共上了" tabular-nums>
                     <!-- 这里因为有数值动画所以需要用v-if! -->
                     <span class="animate__animated animate__fadeIn" v-if="visiableIndex >= 7">
-                        <n-number-animation ref="numberAnimationInstRef" :from="0" :to="818" />
+                        <n-number-animation
+                            :from="0"
+                            :to="userStore.user.learningStatistic?.lesson.total"
+                        />
                     </span>
                     <template #suffix>
                         <span class="animate__animated animate__fadeIn" v-show="visiableIndex >= 8"
@@ -54,7 +57,7 @@
                         class="animate__animated animate__fadeIn course-name"
                         v-show="visiableIndex >= 10"
                     >
-                        数据结构
+                        {{ userStore.user.learningStatistic?.lesson.most.name }}
                     </div>
                 </n-statistic>
             </div>
@@ -65,8 +68,14 @@
 <script setup lang="ts">
 import CartoonPlayer from '@/components/Cartoon-Player.vue'
 import router from '@/router'
+import { useUserStore } from '@/stores/modules/user'
 import { NStatistic, NNumberAnimation } from 'naive-ui'
 import { ref } from 'vue'
+//获取用户Store
+const userStore = useUserStore()
+
+//等待机制
+//#region
 //等动画播放完再开放路由
 const isCartoonReady = ref(false)
 //解锁路由
@@ -76,10 +85,9 @@ const unlockNextRoute = () => {
 const nextRoute = () => {
     if (isCartoonReady.value) {
         router.push({ name: 'library' })
-    } else {
-        //TODO: 这里可以加个提示啥的
     }
 }
+//#endregion
 </script>
 
 <style scoped>
@@ -106,6 +114,6 @@ img {
     padding: 10px;
 }
 .course-name {
-    font-size: 20px;
+    font-size: 16px;
 }
 </style>

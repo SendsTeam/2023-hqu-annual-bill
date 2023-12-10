@@ -11,7 +11,12 @@ const router = createRouter({
         {
             path: '/configure',
             name: 'configure',
-            component: () => import('../views/Configure-View.vue') 
+            component: () => import('../views/Configure-View.vue')
+        },
+        {
+            path: '/loading',
+            name: 'loading',
+            component: () => import('../views/Loading-View.vue')
         },
         {
             path: '/cartoon/dormitory',
@@ -32,7 +37,7 @@ const router = createRouter({
             path: '/cartoon/cafeteria',
             name: 'cafeteria',
             component: () => import('../views/Cafeteria-View.vue')
-        },
+        }
     ]
 })
 

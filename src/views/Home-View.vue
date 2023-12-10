@@ -10,6 +10,7 @@ import { ref } from 'vue'
 import { type Campus } from '@/models/modules/user/type/index'
 import FadeTransition from '@/components/Fade-Transition.vue'
 import router from '@/router'
+import { useStatusStore } from '../stores/modules/status'
 
 //判断是哪个校区的,展示不同的背景图
 const campas = ref<Campus>('xiamen')
@@ -18,6 +19,8 @@ const campas = ref<Campus>('xiamen')
 const next = () => {
     router.push({ name: 'dormitory' })
 }
+
+useStatusStore().isSettingAvailable = true //开放设置页
 </script>
 
 <style scoped lang="less">

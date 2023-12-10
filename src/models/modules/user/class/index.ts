@@ -10,6 +10,8 @@ export class User {
     public code: string | null = null //这里的初始化由APP.vue完成
     //登陆
     public async login() {
+        //!测试通道!
+        if (this.token) return
         //这里一定会有code!
         const data = await API.login(this.code!)
         if (data) {

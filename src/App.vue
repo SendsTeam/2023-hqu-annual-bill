@@ -17,19 +17,21 @@ const userStore = useUserStore()
 userStore.user.code = getCodeByRedirect()
 
 //TODO: 检查本地存储,看看是否配置过,如果没有先指向配置页
+//#region
 //如果存在配置信息,则按上次配置信息来
 const settingStore = useSettingStore()
 const setting = localStorage.getItem('setting')
 statusStore.hasConfigured = setting ? true : false
-router.replace({ name: 'configure' })
-// if (setting) {
-//     //装载本地配置
-//     settingStore.$state = JSON.parse(setting)
-//     router.replace({ name: 'home' })
-// } else {
-//     //跳转到配置页
-//     router.replace({ name: 'configure' })
-// }
+
+if (setting) {
+    //装载本地配置
+    settingStore.$state = JSON.parse(setting)
+    router.replace({ name: 'loading' })
+} else {
+    //跳转到配置页
+    router.replace({ name: 'configure' })
+}
+//#endregion
 </script>
 
 <template>
@@ -38,7 +40,7 @@ router.replace({ name: 'configure' })
         <n-message-provider>
             <router-view></router-view>
         </n-message-provider>
-        <audio-player v-show="statusStore.hasConfigured" />
+        <audio-player v-show="statusStore.isSettingAvailable" />
     </div>
 </template>
 

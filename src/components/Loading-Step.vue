@@ -11,6 +11,7 @@
 import { NStep, NSteps, type StepsProps } from 'naive-ui'
 import { ref, watch } from 'vue'
 import { useUserStore } from '@/stores/modules/user'
+import { useStatusStore } from '@/stores/modules/status'
 
 //事件声明
 const emit = defineEmits<{
@@ -25,20 +26,24 @@ const userStore = useUserStore()
 //Promise链
 userStore
     .login()
-    .then(() => {
+    .then(async () => {
         current.value++
-        return userStore.init()
+        await userStore.init()
     })
-    .then(() => {
+    .then(async () => {
         current.value++
-        return userStore.getStatistics()
+        await userStore.getStatistics()
     })
     .then(() => {
         current.value++
     })
 
+//进度完成后触发
+const statusStore = useStatusStore()
 watch(current, () => {
     if (current.value > maxStep) {
+        //通知状态仓库已经完成全部准备
+        statusStore.isReady = true
         //触发完成的hook
         emit('finished')
     }

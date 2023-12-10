@@ -1,10 +1,6 @@
 //原始接口数据
-export interface I_OriginLearningStatistic {
-
-}
-export interface I_OriginPaymentStatistic {
-    
-}
+export interface I_OriginLearningStatistic {}
+export interface I_OriginPaymentStatistic {}
 
 //解析后的数据
 
@@ -31,6 +27,9 @@ export interface I_PaymentStatistic {
         total: number //餐厅消费总额
         earliestTime: string //今年最早来到食堂的时间,注意不是第一次来食堂的时间
         latestTime: string //今年最晚来到食堂的时间,注意不是最后一次来食堂的时间
+    }
+    library: {
+        total: number //图书馆消费(欠费)
     }
     //其他消费
     other: {

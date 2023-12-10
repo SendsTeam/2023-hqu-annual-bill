@@ -5,6 +5,8 @@ export const useStatusStore = defineStore('StatusStore', {
     state: (): I_StatusStoreState => ({
         hasConfigured: false,
         currentPage: 'Home',
-        isPC: false
+        isPC: false,
+        isReady: false,
+        isSettingAvailable: false
     })
 })

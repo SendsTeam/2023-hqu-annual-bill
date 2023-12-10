@@ -14,6 +14,7 @@ export const useUserStore = defineStore('UserStore', {
         async init() {
             await this.user.initUser()
         },
+        //获取流水
         async getStatistics() {
             await this.user.getLearning()
             await this.user.getPayment()
