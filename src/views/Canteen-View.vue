@@ -67,7 +67,7 @@ const unlockNextRoute = () => {
 }
 const nextRoute = () => {
   if (isCartoonReady.value) {
-    router.push({ name: 'dormitorytwo' })
+    router.push({ name: 'dormitory-two' })
   } else {
     //TODO: 这里可以加个提示啥的
   }

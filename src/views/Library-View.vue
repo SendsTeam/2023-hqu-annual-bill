@@ -40,7 +40,8 @@
                         <!-- 这里因为有数值动画所以需要用v-if! -->
                         <span class="animate__animated animate__fadeIn" v-if="visiableIndex >= 7">
                             <n-number-animation
-                                :from="0"
+                                :from="0.0"
+                                :precision="2"
                                 :to="userStore.user.paymentStatistic?.library.total"
                             />
                         </span>
