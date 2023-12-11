@@ -33,16 +33,7 @@ const router = createRouter({
             name: 'library',
             component: () => import('../views/Library-View.vue')
         },
-        {
-            path: '/cartoon/cafeteria',
-            name: 'cafeteria',
-            component: () => import('../views/Cafeteria-View.vue')
-        },
-        {
-            path: '/summary',
-            name: 'summary',
-            component: () => import('../views/Summary-View.vue')
-        }
+
     ]
 })
 
