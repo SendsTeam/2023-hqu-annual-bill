@@ -12,10 +12,9 @@ cache:
 build:
   stage: build
   script:
-    - npm config set registry https://registry.npm.taobao.org
-    - npm i -g pnpm
-    - pnpm install --no-frozen-lockfile
-    - pnpm run build 
+    - npm install -g cnpm --registry=https://registry.npm.taobao.org
+    - cnpm install --no-frozen-lockfile
+    - cnpm run build 
     - sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
     - apt update && apt install zip
     - zip -r dist.zip ./dist/
