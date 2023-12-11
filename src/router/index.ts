@@ -37,6 +37,11 @@ const router = createRouter({
             path: '/cartoon/cafeteria',
             name: 'cafeteria',
             component: () => import('../views/Cafeteria-View.vue')
+        },
+        {
+            path: '/summary',
+            name: 'summary',
+            component: () => import('../views/Summary-View.vue')
         }
     ]
 })

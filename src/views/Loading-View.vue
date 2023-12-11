@@ -8,6 +8,7 @@
 import LoadingStep from '@/components/Loading-Step.vue'
 import router from '@/router'
 const next = () => {
+    // router.replace({ name: 'summary' })
     router.replace({ name: 'home' })
 }
 </script>

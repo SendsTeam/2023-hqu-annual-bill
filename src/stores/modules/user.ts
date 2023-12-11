@@ -1,6 +1,7 @@
 import type { I_UserStoreState } from '@/models/modules/store/user/interface'
 import { User } from '@/models/modules/user/class'
 import { defineStore } from 'pinia'
+import type { Ref } from 'vue'
 
 export const useUserStore = defineStore('UserStore', {
     state: (): I_UserStoreState => ({
@@ -11,8 +12,8 @@ export const useUserStore = defineStore('UserStore', {
             await this.user.login()
         },
         //!初始化数据,不调这个拿不到数据!
-        async init() {
-            await this.user.initUser()
+        async init(status: Ref<string>) {
+            await this.user.initUser(status)
         },
         //获取流水
         async getStatistics() {

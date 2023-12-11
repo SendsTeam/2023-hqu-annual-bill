@@ -1,5 +1,6 @@
 import { API } from '@/api'
 import type { I_LearningStatistic, I_PaymentStatistic } from '../../bill/interface/index'
+import type { Ref } from 'vue'
 //models实现层
 export class User {
     public learningStatistic: I_LearningStatistic | null = null
@@ -21,10 +22,9 @@ export class User {
         }
     }
     //!初始化数据,不调这个拿不到数据!
-    public async initUser() {
-        //等待初始化完成后才能获取数据!
-        //TODO: 后续要重构为ws,ws等待的逻辑恰好可以封装成Promise!
-        await API.initUser(this.token)
+    //status为响应式ws进度
+    public async initUser(status: Ref<string>) {
+        await API.initUser(this.token, status)
     }
     public async getPayment() {
         this.paymentStatistic = await API.getPayment(this.token)

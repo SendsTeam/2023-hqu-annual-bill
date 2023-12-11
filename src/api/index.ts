@@ -4,6 +4,7 @@ import {
     type I_LearningStatistic,
     type I_PaymentStatistic
 } from '@/models/modules/bill/interface/index'
+import type { Ref } from 'vue'
 const baseUrl = 'https://api.sends.cc'
 class _API {
     private _userAPI = axios.create({
@@ -39,26 +40,37 @@ class _API {
     }
     //!初始化用户数据 必须要初始化之后才能拿到数据
     // 初始化之后要在本地存储标识!
-    public async initUser(token: string) {
-        //TODO: 这里之后会重构成websocket
-        if (localStorage.getItem('isInitialized')) {
-            return
-        } else {
-            try {
-                const { data } = await this._yearBillAPI.get('init', {
-                    headers: {
-                        token
+    public initUser(token: string, status: Ref<string>): Promise<string> {
+        return new Promise((resolve, reject) => {
+            if (localStorage.getItem('isInitialized')) {
+                status.value = '数据已初始化'
+                resolve('数据已初始化')
+            } else {
+                try {
+                    //开启ws
+                    const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
+
+                    ws.onmessage = (evt) => {
+                        //注意ws传的是字符串JSON,要解析成JS对象
+                        const data = JSON.parse(evt.data)
+                        //更新状态
+                        status.value = data.msg
+                        if (data.code == 1000) {
+                            //初始化成功
+                            localStorage.setItem('isInitialized', 'true')
+                            resolve(data.msg)
+                        } else if (data.code == 1001) {
+                            //!爆满,交给调用链catch进行重进界面处理
+                            reject(data.msg)
+                        }
                     }
-                })
-                if (data.code === 1000) {
-                    localStorage.setItem('isInitialized', 'true')
-                } else {
-                    alert(`初始化用户失败! ${data.msg}`)
+                } catch (error) {
+                    alert(`初始化用户失败! ${error}`)
+                    reject(error)
                 }
-            } catch (error) {
-                alert(`初始化用户失败! ${error}`)
             }
-        }
+        })
+        //TODO: 这里之后会重构成websocket
     }
     //获取付款信息
     public async getPayment(token: string): Promise<I_PaymentStatistic | null> {

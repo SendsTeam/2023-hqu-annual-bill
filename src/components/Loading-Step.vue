@@ -2,7 +2,7 @@
 <template>
     <n-steps vertical :current="current as number" :status="currentStatus">
         <n-step title="登陆" description="" />
-        <n-step title="初始化数据" description="流量较大,会稍微久点🕘" />
+        <n-step title="初始化数据" :description="status" />
         <n-step title="获取流水数据" description="" />
     </n-steps>
 </template>
@@ -24,11 +24,19 @@ const currentStatus = ref<StepsProps['status']>('process')
 
 const userStore = useUserStore()
 //Promise链
+//映射初始化ws进度
+const status = ref('流量较大,会稍微久点🕘')
 userStore
     .login()
     .then(async () => {
         current.value++
-        await userStore.init()
+        await userStore.init(status)
+    })
+    .catch((msg: string) => {
+        //提示用户重新进入界面!
+        alert(msg)
+        //刷新
+        window.location.reload()
     })
     .then(async () => {
         current.value++
