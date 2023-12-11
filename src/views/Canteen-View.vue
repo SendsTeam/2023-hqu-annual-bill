@@ -8,47 +8,47 @@
     <img
         v-show="visiableIndex >= 1"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-01.png"
+        src="@/assets/img/cartoon/canteen/canteen-01.png"
     />
     <img
         v-show="visiableIndex >= 2"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-02.png"
+        src="@/assets/img/cartoon/canteen/canteen-02.png"
         style="z-index: 1"
     />
     <img
         v-show="visiableIndex >= 3"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-03.png"
+        src="@/assets/img/cartoon/canteen/canteen-03.png"
         style="z-index: 1"
     />
     <img
         v-show="visiableIndex >= 4"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-04.png"
+        src="@/assets/img/cartoon/canteen/canteen-04.png"
     />
     <img
         v-show="visiableIndex >= 5"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-05.png"
+        src="@/assets/img/cartoon/canteen/canteen-05.png"
         style="z-index: 1"
     />
     <img
         v-show="visiableIndex >= 6"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-06.png"
+        src="@/assets/img/cartoon/canteen/canteen-06.png"
         style="z-index: 1"
     />
     <img
         v-show="visiableIndex >= 7"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-07.png"
+        src="@/assets/img/cartoon/canteen/canteen-07.png"
         style="z-index: 1"
     />
     <img
         v-show="visiableIndex >= 8"
         class="animate__animated animate__fadeIn"
-        src="@/assets/img/cartoon/cafeteria/cafeteria-08.png"
+        src="@/assets/img/cartoon/canteen/canteen-08.png"
         style="z-index: 1"
     />
   </cartoon-player>
@@ -67,7 +67,7 @@ const unlockNextRoute = () => {
 }
 const nextRoute = () => {
   if (isCartoonReady.value) {
-    router.push({ name: 'cafeteria' })
+    router.push({ name: 'dormitorytwo' })
   } else {
     //TODO: 这里可以加个提示啥的
   }
