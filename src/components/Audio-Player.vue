@@ -35,9 +35,5 @@ onMounted(() => {
 
 <style scoped>
 #audio-container {
-    position: fixed;
-    z-index: 99;
-    top: 10px;
-    right: 10px;
 }
 </style>

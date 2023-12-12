@@ -33,7 +33,7 @@ useStatusStore().isSettingAvailable = true //开放设置页
         left: 0;
         right: 0;
         bottom: 10%;
-        z-index: 99999;
+        z-index: 999;
         text-align: center;
         font-family: '楷体';
         color: #9ca3af;
