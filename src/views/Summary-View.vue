@@ -4,13 +4,9 @@
             <n-space>
                 <h2>Hi!</h2>
                 <n-badge value="0">
-                    <n-avatar
-                        size="small"
-                        src="https://thirdwx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEIq5tn9A4EuBTjDusZ1Rd79dTibpNJlrar1RjcI4icIpVdsyMsmtmia5WTShraxVv1q5vVoHMVN7LDxZHgDy99CJwXxjYLW6H4I8C7oq6HkPT9GQ/132"
-                    />
+                    <n-avatar size="small" :src="userStore.user.avatar" />
                 </n-badge>
-
-                <h2 id="nick-name">柚子茶</h2>
+                <h2 id="nick-name">{{ userStore.user.nickName }}</h2>
             </n-space>
         </div>
 
@@ -22,11 +18,10 @@
             </template>
         </n-statistic>
         <n-statistic label="恭喜你成为" tabular-nums>
-            <!-- 这里到时候少一位,然后setTimeOut +1 -->
             <template #prefix>
                 <span class="animate__animated animate__fadeIn">第</span>
             </template>
-            <n-number-animation :from="0" :to="114" />
+            <n-number-animation :from="0" :to="userStore.user.rankStatistic?.index" />
             <template #suffix>
                 <span class="animate__animated animate__fadeIn">名✨</span>
             </template>
@@ -43,6 +38,9 @@
 
 <script setup lang="ts">
 import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge } from 'naive-ui'
+import { useUserStore } from '@/stores/modules/user'
+
+const userStore = useUserStore()
 </script>
 
 <style lang="less" scoped>

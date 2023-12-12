@@ -1,10 +1,15 @@
 import { API } from '@/api'
-import type { I_LearningStatistic, I_PaymentStatistic } from '../../bill/interface/index'
+import type {
+    I_LearningStatistic,
+    I_PaymentStatistic,
+    I_RankStatistic
+} from '../../bill/interface/index'
 import type { Ref } from 'vue'
 //models实现层
 export class User {
     public learningStatistic: I_LearningStatistic | null = null
     public paymentStatistic: I_PaymentStatistic | null = null
+    public rankStatistic: I_RankStatistic | null = null
     public token: string = ''
     public avatar: string = ''
     public nickName: string = ''
@@ -31,5 +36,8 @@ export class User {
     }
     public async getLearning() {
         this.learningStatistic = await API.getLearning(this.token)
+    }
+    public async getRank() {
+        this.rankStatistic = await API.getRank(this.token)
     }
 }

@@ -2,7 +2,8 @@ import axios from 'axios'
 import { getFormattedTime } from '../util/index'
 import {
     type I_LearningStatistic,
-    type I_PaymentStatistic
+    type I_PaymentStatistic,
+    type I_RankStatistic
 } from '@/models/modules/bill/interface/index'
 import type { Ref } from 'vue'
 const baseUrl = 'https://api.sends.cc'
@@ -140,6 +141,29 @@ class _API {
             }
         } catch (error) {
             alert(`获取学习数据失败! ${error}`)
+            return null
+        }
+    }
+    //获取排名
+    public async getRank(token: string): Promise<I_RankStatistic | null> {
+        try {
+            const { data } = await this._yearBillAPI.get('rank', {
+                headers: {
+                    token
+                }
+            })
+            if (data.code === 1000) {
+                const origin = data.data
+                const rankStatistic: I_RankStatistic = {
+                    index: origin.index
+                }
+                return rankStatistic
+            } else {
+                alert(`获取排名数据失败! ${data.msg}`)
+                return null
+            }
+        } catch (error) {
+            alert(`获取排名数据失败! ${error}`)
             return null
         }
     }
