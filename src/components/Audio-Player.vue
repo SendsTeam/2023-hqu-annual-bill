@@ -1,39 +1,27 @@
 <template>
-    <img id="audio-container" ref="controller" src="@/assets/icon/audio.png" @click="toggle" />
+    <img v-if="active" id="audio-container" src="@/assets/icon/audio.png" />
 </template>
 
 <script setup lang="ts">
-import { useAudio } from '@/composables/index'
-import { onMounted, ref } from 'vue'
-import { useRotation } from '@/composables/index'
+import { useAudioStore } from '@/stores/modules/audio'
+import { useSettingStore } from '@/stores/modules/setting'
+import { computed } from 'vue'
+const audioStore = useAudioStore()
+const settingStore = useSettingStore()
 
-//音频
-const { toggle, isPlaying } = useAudio({
-    toggleHook: () => {
-        //切换状态:播放音乐的时候旋转；停止音乐的时候停止旋转
-        if (isPlaying()) {
-            stopRotation()
-        } else {
-            rotation()
-        }
-    }
-})
-
-//播放器旋转
-const controller = ref<HTMLImageElement>()
-//这里要等到挂载后才能拿到,所以声明后在onMounted赋值
-let stopRotation: () => void
-let rotation: () => void
-onMounted(() => {
-    if (controller.value) {
-        const { rotate, stopRotate } = useRotation(controller.value)
-        stopRotation = stopRotate
-        rotation = rotate
-    }
+const active = computed(() => {
+    //开启了BGM并且正在播放
+    return settingStore.bgm && !audioStore.paused
 })
 </script>
 
 <style scoped>
 #audio-container {
+    position: fixed;
+    width: 25px;
+    height: 25px;
+    top: 20px;
+    right: 20px;
+    z-index: 99999999;
 }
 </style>

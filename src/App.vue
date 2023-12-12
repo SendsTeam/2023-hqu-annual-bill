@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import SettingDrawer from './components/Setting-Drawer.vue'
+import TouchListener from './components/Touch-Listener.vue'
+import AudioPlayer from './components/Audio-Player.vue'
 import router from '@/router'
 import { useStatusStore } from './stores/modules/status'
 import { IsPC } from '@/util/index'
-import TouchListener from './components/Touch-Listener.vue'
-import AudioPlayer from './components/Audio-Player.vue'
-import { NMessageProvider, NDrawer, NDrawerContent } from 'naive-ui'
+import { NMessageProvider } from 'naive-ui'
 import { useSettingStore } from '@/stores/modules/setting'
 import { getCodeByRedirect } from './util/index'
 import { useUserStore } from '@/stores/modules/user'
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import type { Placement } from 'naive-ui/es/drawer/src/DrawerBodyWrapper'
 
 //判断桌面端还是移动端
@@ -69,6 +69,7 @@ const touchEffect = (direction: 'left' | 'right' | 'up' | 'down') => {
         <!-- 设置页 -->
         <setting-drawer :drawer-status="drawerStatus"></setting-drawer>
     </touch-listener>
+    <audio-player/>
 </template>
 
 <style scoped></style>

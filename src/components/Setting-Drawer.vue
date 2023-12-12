@@ -10,7 +10,6 @@
         @after-leave="onAfterLeave"
     >
         <n-drawer-content>
-            <!-- <audio-player v-show="statusStore.isSettingAvailable" /> -->
             <n-list>
                 <template #header> <h2>配置</h2> </template>
                 <n-list-item>

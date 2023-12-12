@@ -206,7 +206,7 @@ export function useAudio(
     } = {}
 ) {
     // 静态资源默认会被指向public文件夹
-    const { name = 'bgm1.mp3', src = './audio/', toggleHook } = options
+    const { name = 'default.mp3', src = './audio/', toggleHook } = options
 
     //使用js控制音频
     const audio = new Audio(src + name)
