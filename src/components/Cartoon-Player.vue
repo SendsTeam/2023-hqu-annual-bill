@@ -119,10 +119,9 @@ onUnmounted(() => {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 10%;
+    bottom: 5%;
     z-index: 99999;
     text-align: center;
-    font-family: '楷体';
     font-weight: bold;
     color: #9ca3af;
     font-size: 24px;

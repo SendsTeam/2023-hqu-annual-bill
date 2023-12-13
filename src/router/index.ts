@@ -21,27 +21,27 @@ const router = createRouter({
         {
             path: '/cartoon/dormitory',
             name: 'dormitory',
-            component: () => import('../views/Dormitory-View.vue')
+            component: () => import('../views/cartoon/Dormitory-View.vue')
         },
         {
             path: '/cartoon/classroom',
             name: 'classroom',
-            component: () => import('../views/Classroom-View.vue')
+            component: () => import('../views/cartoon/Classroom-View.vue')
         },
         {
             path: '/cartoon/library',
             name: 'library',
-            component: () => import('../views/Library-View.vue')
+            component: () => import('../views/cartoon/Library-View.vue')
         },
         {
             path: '/cartoon/canteen',
             name: 'canteen',
-            component: () => import('../views/Canteen-View.vue')
+            component: () => import('../views/cartoon/Canteen-View.vue')
         },
         {
             path: '/cartoon/dormitory-two',
             name: 'dormitory-two',
-            component: () => import('../views/Dormitory-Two-View.vue')
+            component: () => import('../views/cartoon/Dormitory-Two-View.vue')
         },
         {
             path: '/summary',
