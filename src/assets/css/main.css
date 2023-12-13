@@ -1,4 +1,16 @@
-/* 这里写一些公用的 */
+/* 这里写一些项目级的配置 */
+
+/* 配置字体 */
+@font-face {
+    /* 自定义的字体名称 */
+    font-family: 'lovely-bear';
+    /* TTF格式的路径和格式 */
+    src: url('../ttf/lovely-bear.ttf') format('truetype');
+    /* 字体的粗细 */
+    font-weight: normal;
+    /* 字体的风格 */
+    font-style: normal;
+}
 
 /* 清除默认样式 */
 *{
@@ -9,7 +21,8 @@
 /* 让界面居中 */
 body{
     /* width: 100vw; */
-    height:100vh;
+    height: 100vh;
+    font-family: 'lovely-bear',sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,3 +44,4 @@ body{
         height: 100%;
     }
 }
+
