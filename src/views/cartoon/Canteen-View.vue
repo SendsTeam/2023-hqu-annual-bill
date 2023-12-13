@@ -4,6 +4,7 @@
       :effect="unlockNextRoute"
       @click="nextRoute"
       :max-index="9"
+      next-route-name="dormitory-two"
   >
     <img
         v-show="visiableIndex >= 1"

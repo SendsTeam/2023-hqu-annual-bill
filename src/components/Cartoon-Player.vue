@@ -1,7 +1,12 @@
 <template>
     <div id="cartoon-container" @click="tip">
         <slot :visiableIndex="visiableIndex"></slot>
-        <div id="nextTip" v-show="isCompleted" class="animate__animated animate__fadeInLeft">
+        <!-- 如果有自动播放则不跳出tip! -->
+        <div
+            id="nextTip"
+            v-show="isCompleted && !settingStore.cartoon.autoPlay"
+            class="animate__animated animate__fadeInLeft"
+        >
             <fade-transition>
                 <slot name="tip"> 点击任意处继续!</slot>
             </fade-transition>
@@ -11,7 +16,7 @@
 
 <script setup lang="ts">
 import router from '@/router'
-import { computed, h, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import { computed, h, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { useMessage, NIcon } from 'naive-ui'
 import { MdHourglass } from '@vicons/ionicons4'
 import FadeTransition from './Fade-Transition.vue'
@@ -35,7 +40,7 @@ const { cartoonGap, effect, maxIndex, nextRouteName, nextRouteTime } = withDefau
     {
         //默认两秒后
         cartoonGap: 2000,
-        nextRouteTime: 0
+        nextRouteTime: 1000
     }
 )
 //#endregion
@@ -55,6 +60,19 @@ const tip = () => {
 }
 //没点击定时提示
 let tipIntervalId: number
+const autoTip = () => {
+    //定时提示漫画播放完毕!
+    if (tipIntervalId) {
+        clearInterval(tipIntervalId)
+        tipIntervalId = 0
+    } else {
+        tipIntervalId = setInterval(() => {
+            message.success('点击任意处继续!', {
+                duration: 1000
+            })
+        }, 4000)
+    }
+}
 //#endregion
 
 //漫画图索引
@@ -68,9 +86,8 @@ const isCompleted = computed(() => {
 
 //监听索引
 const settingStore = useSettingStore()
-let once = false
-watchEffect(() => {
-    if (isCompleted.value && !once) {
+watch(isCompleted, () => {
+    if (isCompleted.value) {
         //如果传了effect则执行
         effect && effect(visiableIndex.value)
 
@@ -78,14 +95,7 @@ watchEffect(() => {
         message.destroyAll()
 
         //定时提示漫画播放完毕!
-        tipIntervalId = setInterval(() => {
-            message.success('点击任意处继续!', {
-                duration: 1000
-            })
-        }, 8000)
-
-        //once赋值为true
-        once = true
+        autoTip()
 
         //如果配置了自动播放,则稍后跳转路由
         if (settingStore.cartoon.autoPlay) {
@@ -99,9 +109,11 @@ watchEffect(() => {
 //#region
 
 const statusStore = useStatusStore()
-let indexIntervalId: number
 
-onMounted(() => {
+let indexIntervalId: number
+//自动增加索引
+const autoIncreaseIndex = () => {
+    clearInterval(indexIntervalId)
     indexIntervalId = setInterval(() => {
         //TODO: 这里应该抽离出一个执行队列,不然容易逻辑耦合
         //如果全局暂停了就停止增加索引
@@ -110,11 +122,34 @@ onMounted(() => {
         if (isCompleted.value) {
             //停止索引增加
             clearInterval(indexIntervalId)
-            console.log('Completed!')
             return
         }
         visiableIndex.value++
     }, cartoonGap)
+}
+
+//如果这小子反复开关快速展示!
+watch(
+    () => settingStore.cartoon.quickPlay,
+    () => {
+        if (settingStore.cartoon.quickPlay) {
+            visiableIndex.value = maxIndex
+        } else {
+            //重置索引
+            visiableIndex.value = 0
+            autoTip()
+            autoIncreaseIndex()
+        }
+    }
+)
+
+onMounted(() => {
+    //如果开启了快速展示,则直接拉满索引
+    if (settingStore.cartoon.quickPlay) {
+        visiableIndex.value = maxIndex
+    } else {
+        autoIncreaseIndex()
+    }
 })
 
 onUnmounted(() => {
@@ -137,7 +172,7 @@ onUnmounted(() => {
     left: 0;
     right: 0;
     bottom: 5%;
-    z-index: 99999;
+    z-index: 9999;
     text-align: center;
     font-weight: bold;
     color: #9ca3af;

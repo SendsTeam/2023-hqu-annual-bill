@@ -9,8 +9,10 @@ export const useSettingStore = defineStore('SettingStore', {
         bgm: true,
         //漫画相关
         cartoon: {
+            //自动播放
             autoPlay: false,
-            repeatPlay: true
+            //快速展示
+            quickPlay: false
         },
         egg: false
     })

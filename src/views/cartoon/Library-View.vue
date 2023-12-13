@@ -4,6 +4,7 @@
         :effect="unlockNextRoute"
         @click="nextRoute"
         :max-index="10"
+        next-route-name="canteen"
     >
         <img
             v-show="visiableIndex >= 1"

@@ -8,6 +8,7 @@
                 <p>在你配置完之后,配置信息将被保存</p>
                 <p>再次访问年度账单将不会再出现这个界面</p>
                 <p>但你仍然可以在设置里更改相关选项</p>
+                <p>Tip:左右滑动可以呼出设置哦</p>
                 <img src="@/assets/gif/chiikawa.png" />
             </n-space>
         </n-layout-header>
@@ -67,10 +68,10 @@
                                 </n-space>
                                 <n-space></n-space>
                                 <n-space>
-                                    <p>重复播放</p>
+                                    <p>快速播放</p>
                                     <n-switch
                                         :round="false"
-                                        v-model:value="settingStore.cartoon.repeatPlay"
+                                        v-model:value="settingStore.cartoon.quickPlay"
                                     />
                                 </n-space>
                             </n-space>

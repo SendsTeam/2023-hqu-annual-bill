@@ -4,7 +4,7 @@ export interface I_SettingStoreState {
     bgm: boolean //是否开启BGM
     cartoon: {
         autoPlay: boolean //自动播放
-        repeatPlay: boolean //重复播放
+        quickPlay: boolean //重复播放
     }
     egg: boolean //是否开启彩蛋
 }

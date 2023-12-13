@@ -3,44 +3,48 @@
         v-slot="{ visiableIndex }"
         :effect="unlockNext"
         @click="next"
-        :max-index="8"
+        :max-index="9"
         next-route-name="classroom"
     >
-        <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
         <img
             v-show="visiableIndex >= 1"
             class="animate__animated animate__fadeIn"
-            src="@/assets/img/cartoon/dormitory/dormitory-01.png"
+            src="@/assets/img/cartoon/dormitory/dormitory-00.png"
         />
         <img
             v-show="visiableIndex >= 2"
             class="animate__animated animate__fadeIn"
-            src="@/assets/img/cartoon/dormitory/dormitory-02.png"
+            src="@/assets/img/cartoon/dormitory/dormitory-01.png"
         />
         <img
             v-show="visiableIndex >= 3"
             class="animate__animated animate__fadeIn"
-            src="@/assets/img/cartoon/dormitory/dormitory-03.png"
+            src="@/assets/img/cartoon/dormitory/dormitory-02.png"
         />
         <img
             v-show="visiableIndex >= 4"
+            class="animate__animated animate__fadeIn"
+            src="@/assets/img/cartoon/dormitory/dormitory-03.png"
+        />
+        <img
+            v-show="visiableIndex >= 5"
             class="animate__animated animate__fadeIn"
             src="@/assets/img/cartoon/dormitory/dormitory-04.png"
             style="z-index: 1"
         />
         <img
-            v-show="visiableIndex >= 5"
+            v-show="visiableIndex >= 6"
             class="animate__animated animate__fadeIn"
             src="@/assets/img/cartoon/dormitory/dormitory-05.png"
             style="z-index: 1"
         />
         <img
-            v-show="visiableIndex >= 6"
+            v-show="visiableIndex >= 7"
             class="animate__animated animate__fadeIn"
             src="@/assets/img/cartoon/dormitory/dormitory-06.png"
         />
         <img
-            v-show="visiableIndex >= 7"
+            v-show="visiableIndex >= 8"
             class="animate__animated animate__fadeIn"
             src="@/assets/img/cartoon/dormitory/dormitory-07.png"
             style="z-index: 1"

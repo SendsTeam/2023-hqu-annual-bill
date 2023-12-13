@@ -5,13 +5,18 @@
         v-model:show="drawerStatus.active"
         width="75%"
         :placement="drawerStatus.direction"
-        :z-index="999"
+        :z-index="99999"
         @after-enter="onAfterEnter"
         @after-leave="onAfterLeave"
     >
         <n-drawer-content>
             <n-list>
-                <template #header> <h2>配置</h2> </template>
+                <template #header>
+                    <h2>
+                        配置
+                        <span id="tip" v-show="tip" v-text="tip"></span>
+                    </h2>
+                </template>
                 <n-list-item>
                     <n-thing>
                         <template #header> 1. 校区</template>
@@ -71,10 +76,10 @@
                             </n-space>
                             <n-space></n-space>
                             <n-space>
-                                <p>重复播放</p>
+                                <p>快速播放</p>
                                 <n-switch
                                     :round="false"
-                                    v-model:value="settingStore.cartoon.repeatPlay"
+                                    v-model:value="settingStore.cartoon.quickPlay"
                                 />
                             </n-space>
                         </n-space>
@@ -101,6 +106,7 @@ import {
 import { useStatusStore } from '@/stores/modules/status'
 import type { Campus } from '@/models/modules/user/type'
 import { useSettingStore } from '@/stores/modules/setting'
+import { ref, watch } from 'vue'
 
 const { drawerStatus } = defineProps<{
     drawerStatus: {
@@ -142,12 +148,38 @@ const onAfterLeave = () => {
 //获取settingStore,让这里的配置直接同步Store!
 const settingStore = useSettingStore()
 
+//提示
+const tip = ref('')
+let timeoutId: number
+const showTip = (content: string, delay: number = 2000) => {
+    tip.value = content
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+        tip.value = ''
+    }, delay)
+}
+
 //校区
 //#region
 //改变选项的callback
 const changeCampus = (e: Event) => {
     settingStore.campus = (e.target as HTMLInputElement).value as Campus
 }
+//#endregion
+
+//播放设置
+//#region
+watch(
+    () => settingStore.cartoon.quickPlay,
+    () => {
+        if (settingStore.cartoon.quickPlay) {
+            showTip('debug 10 enabled!')
+        } else {
+            showTip('debug 10 disabled!')
+        }
+    }
+)
+
 //#endregion
 
 //保存更改
@@ -157,4 +189,9 @@ const saveChange = () => {
 //#endregion
 </script>
 
-<style scoped></style>
+<style scoped>
+#tip {
+    color: gray;
+    font-size: 16px;
+}
+</style>
