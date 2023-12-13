@@ -4,6 +4,7 @@
         :effect="unlockNextRoute"
         @click="nextRoute"
         :max-index="11"
+        next-route-name="library"
     >
         <img
             v-show="visiableIndex >= 1"

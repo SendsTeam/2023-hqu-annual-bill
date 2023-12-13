@@ -5,7 +5,7 @@
         v-model:show="drawerStatus.active"
         width="75%"
         :placement="drawerStatus.direction"
-        :z-index="9999"
+        :z-index="999"
         @after-enter="onAfterEnter"
         @after-leave="onAfterLeave"
     >

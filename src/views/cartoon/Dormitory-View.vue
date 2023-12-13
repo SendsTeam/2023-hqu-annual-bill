@@ -1,5 +1,11 @@
 <template>
-    <cartoon-player v-slot="{ visiableIndex }" :effect="unlockNext" @click="next" :max-index="8">
+    <cartoon-player
+        v-slot="{ visiableIndex }"
+        :effect="unlockNext"
+        @click="next"
+        :max-index="8"
+        next-route-name="classroom"
+    >
         <img src="@/assets/img/cartoon/dormitory/dormitory-00.png" />
         <img
             v-show="visiableIndex >= 1"

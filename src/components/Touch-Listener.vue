@@ -1,5 +1,5 @@
 <template>
-    <div @touchstart="onTouchStart" @touchmove="onTouchMove" @touchend="onTouchEnd">
+    <div @touchstart="onTouchStart" @touchend="onTouchEnd">
         <slot name="default" :isEfficientTouched="isEfficientTouched"></slot>
     </div>
 </template>
@@ -18,7 +18,7 @@ const { minTouchDistanceX, minTouchDistanceY } = withDefaults(
     }>(),
     {
         minTouchDistanceX: 150,
-        minTouchDistanceY: 150
+        minTouchDistanceY: 200
     }
 )
 
@@ -37,23 +37,26 @@ const touchStatus = reactive({
 
 //是否为有效触摸
 const isEfficientTouched = ref(false)
-
 //方向
 const touchDirection = ref<'left' | 'right' | 'up' | 'down'>()
 const dealWithTouch = (): boolean => {
     //先假设为有效触摸
     isEfficientTouched.value = true
 
-    if (touchStatus.touchEndX - touchStatus.touchStartX > minTouchDistanceX) {
+    //计算变化量
+    const diffX = touchStatus.touchEndX - touchStatus.touchStartX
+    const diffY = touchStatus.touchEndY - touchStatus.touchStartY
+
+    if (diffX > minTouchDistanceX) {
         touchDirection.value = 'right'
         return true
-    } else if (touchStatus.touchEndX - touchStatus.touchStartX < -minTouchDistanceX) {
+    } else if (diffX < -minTouchDistanceX) {
         touchDirection.value = 'left'
         return true
-    } else if (touchStatus.touchEndY - touchStatus.touchStartY > -minTouchDistanceY) {
+    } else if (diffY > -minTouchDistanceY) {
         touchDirection.value = 'down'
         return true
-    } else if (touchStatus.touchEndY - touchStatus.touchStartY < minTouchDistanceY) {
+    } else if (diffY < minTouchDistanceY) {
         touchDirection.value = 'up'
         return true
     }
@@ -68,12 +71,11 @@ const onTouchStart = (evt: TouchEvent) => {
     touchStatus.touchStartX = evt.touches[0].clientX
     touchStatus.touchStartY = evt.touches[0].clientY
 }
-const onTouchMove = (evt: TouchEvent) => {
-    //记录末尾XY
-    touchStatus.touchEndX = evt.touches[0].clientX
-    touchStatus.touchEndY = evt.touches[0].clientY
-}
-const onTouchEnd = () => {
+const onTouchEnd = (evt: TouchEvent) => {
+    //记录结束XY
+    //注意这里要使用changedTouches(触摸点改变值)
+    touchStatus.touchEndX = evt.changedTouches[0].clientX
+    touchStatus.touchEndY = evt.changedTouches[0].clientY
     //计算方向并且触发effect
     dealWithTouch() && emit('effect', touchDirection.value!)
 }

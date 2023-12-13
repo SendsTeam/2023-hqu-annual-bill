@@ -69,7 +69,7 @@ const touchEffect = (direction: 'left' | 'right' | 'up' | 'down') => {
         <!-- 设置页 -->
         <setting-drawer :drawer-status="drawerStatus"></setting-drawer>
     </touch-listener>
-    <audio-player/>
+    <audio-player />
 </template>
 
 <style scoped></style>

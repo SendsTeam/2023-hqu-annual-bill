@@ -15,6 +15,8 @@ import { computed, h, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import { useMessage, NIcon } from 'naive-ui'
 import { MdHourglass } from '@vicons/ionicons4'
 import FadeTransition from './Fade-Transition.vue'
+import { useStatusStore } from '@/stores/modules/status'
+import { useSettingStore } from '@/stores/modules/setting'
 //Props
 //#region
 const { cartoonGap, effect, maxIndex, nextRouteName, nextRouteTime } = withDefaults(
@@ -33,7 +35,7 @@ const { cartoonGap, effect, maxIndex, nextRouteName, nextRouteTime } = withDefau
     {
         //默认两秒后
         cartoonGap: 2000,
-        nextRouteTime: 2000
+        nextRouteTime: 0
     }
 )
 //#endregion
@@ -57,12 +59,15 @@ let tipIntervalId: number
 
 //漫画图索引
 //#region
+
 const visiableIndex = ref(1)
 //漫画是否播放完成
 const isCompleted = computed(() => {
     return visiableIndex.value >= maxIndex
 })
+
 //监听索引
+const settingStore = useSettingStore()
 let once = false
 watchEffect(() => {
     if (isCompleted.value && !once) {
@@ -82,16 +87,26 @@ watchEffect(() => {
         //once赋值为true
         once = true
 
-        //稍后跳转路由
-        setTimeout(() => {
-            nextRouteName && router.push({ name: nextRouteName })
-        }, nextRouteTime)
+        //如果配置了自动播放,则稍后跳转路由
+        if (settingStore.cartoon.autoPlay) {
+            setTimeout(() => {
+                nextRouteName && router.push({ name: nextRouteName })
+            }, nextRouteTime)
+        }
     }
 })
 //定时增加索引
+//#region
+
+const statusStore = useStatusStore()
 let indexIntervalId: number
+
 onMounted(() => {
     indexIntervalId = setInterval(() => {
+        //TODO: 这里应该抽离出一个执行队列,不然容易逻辑耦合
+        //如果全局暂停了就停止增加索引
+        if (statusStore.globalPaused) return
+
         if (isCompleted.value) {
             //停止索引增加
             clearInterval(indexIntervalId)
@@ -101,10 +116,12 @@ onMounted(() => {
         visiableIndex.value++
     }, cartoonGap)
 })
+
 onUnmounted(() => {
     clearInterval(indexIntervalId)
     clearInterval(tipIntervalId)
 })
+//#endregion
 
 //#endregion
 </script>
