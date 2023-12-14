@@ -70,7 +70,7 @@
                         {{ userStore.user.learningStatistic?.lesson.total }}
                         <span class="remark">节课</span>
                     </div>
-                    <div class="data-line">
+                    <div class="data-line" style="margin: 5px 0">
                         <span class="remark">上的最多的课是</span>
                         <div>
                             <n-space>
@@ -86,14 +86,24 @@
                         </div>
                     </div>
                     <div class="data-line">
-                        <span class="remark">一共上了</span>
-                        {{ userStore.user.learningStatistic?.lesson.morningEight }}
-                        <span class="remark">节早八</span>
+                        <template v-if="userStore.user.learningStatistic?.lesson.morningEight">
+                            <span class="remark">一共上了</span>
+                            {{ userStore.user.learningStatistic?.lesson.morningEight }}
+                            <span class="remark">节早八</span>
+                        </template>
+                        <template v-else>
+                            <div class="remark" style="margin-top: 5px">✨今年没有早八哦</div>
+                        </template>
                     </div>
                     <div class="data-line">
-                        <span class="remark">一共上了</span>
-                        {{ userStore.user.learningStatistic?.lesson.eveningTen }}
-                        <span class="remark">节晚十</span>
+                        <template v-if="userStore.user.learningStatistic?.lesson.eveningTen">
+                            <span class="remark">一共上了</span>
+                            {{ userStore.user.learningStatistic?.lesson.eveningTen }}
+                            <span class="remark">节晚十</span>
+                        </template>
+                        <template v-else>
+                            <div class="remark" style="margin-top: 5px">今年没有晚十哦✨</div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -161,11 +171,8 @@ const userStore = useUserStore()
     }
 }
 
-#classroom-data {
-    .data-line:nth-child(2) {
-        margin: 5px 0;
-    }
-}
+// #classroom-data {
+// }
 
 #canteen-data {
     p {
