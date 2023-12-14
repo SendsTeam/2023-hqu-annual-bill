@@ -33,7 +33,7 @@
             <div class="summary-line">
                 <img
                     src="../assets/img/map/xiamen/active/library-active.png"
-                    style="width: 100px"
+                    style="height: 60px"
                 />
                 <div class="summary-data">
                     <n-statistic label="借书花销为" tabular-nums>
@@ -46,33 +46,81 @@
                         <template #suffix> 元 </template>
                     </n-statistic>
                 </div>
+                <div class="summary-data">
+                    <n-statistic label="其他花销￥为" tabular-nums>
+                        <!-- 这里因为有数值动画所以需要用v-if! -->
+                        <n-number-animation
+                            :from="0.0"
+                            :precision="2"
+                            :to="userStore.user.paymentStatistic?.other.total"
+                        />
+                        <template #suffix> 元 </template>
+                    </n-statistic>
+                </div>
             </div>
-            <div class="summary-line" style="height: 100px">
+            <n-divider />
+            <div class="summary-line" style="height: 120px">
                 <img
                     src="../assets/img/map/xiamen/active/classroom-active.png"
                     style="width: 150px"
                 />
-                <div class="summary-data">
-                    <n-statistic label="你一共上了" tabular-nums>
-                        <!-- 这里因为有数值动画所以需要用v-if! -->
-                        <n-number-animation
-                            :from="0"
-                            :to="userStore.user.learningStatistic?.lesson.total"
-                        />
-                        <template #suffix> 节 </template>
-                    </n-statistic>
-                    <n-statistic label="上的最多的课是" tabular-nums>
-                        <!-- 这里因为有数值动画所以需要用v-if! -->
-                        {{ userStore.user.learningStatistic?.lesson.most.name }}
-                    </n-statistic>
+                <div id="classroom-data" class="summary-data">
+                    <div class="data-line">
+                        <span class="remark">今年你一共上了</span>
+                        {{ userStore.user.learningStatistic?.lesson.total }}
+                        <span class="remark">节课</span>
+                    </div>
+                    <div class="data-line">
+                        <span class="remark">上的最多的课是</span>
+                        <div>
+                            <n-space>
+                                <span>
+                                    {{ userStore.user.learningStatistic?.lesson.most.name }}
+                                </span>
+                                <span>
+                                    <span class="remark">一共</span>
+                                    {{ userStore.user.learningStatistic?.lesson.most.total }}
+                                    <span class="remark">节</span>
+                                </span>
+                            </n-space>
+                        </div>
+                    </div>
+                    <div class="data-line">
+                        <span class="remark">一共上了</span>
+                        {{ userStore.user.learningStatistic?.lesson.morningEight }}
+                        <span class="remark">节早八</span>
+                    </div>
+                    <div class="data-line">
+                        <span class="remark">一共上了</span>
+                        {{ userStore.user.learningStatistic?.lesson.eveningTen }}
+                        <span class="remark">节晚十</span>
+                    </div>
                 </div>
             </div>
+            <n-divider />
             <div class="summary-line">
                 <img
                     src="../assets/img/map/xiamen/active/canteen-active.png"
-                    style="width: 175px"
+                    style="height: 150px"
                 />
-                <div class="summary-data"></div>
+                <div id="canteen-data" class="summary-data">
+                    <div class="data-line">
+                        <div class="remark">今年你最喜欢的食堂是</div>
+                        <div>
+                            {{ userStore.user.paymentStatistic?.restaurant.favorite.name }}
+                        </div>
+                        <div class="remark">你在该食堂消费了</div>
+                        <div>
+                            {{ userStore.user.paymentStatistic?.restaurant.favorite.total }} 元
+                        </div>
+                        <div class="remark">你的食堂支出一共是</div>
+                        <div>{{ userStore.user.paymentStatistic?.restaurant.total }} 元</div>
+                        <div class="remark">你最早的干饭时间是</div>
+                        <div>{{ userStore.user.paymentStatistic?.restaurant.earliestTime }}</div>
+                        <div class="remark">你最晚的干饭时间是</div>
+                        <div>{{ userStore.user.paymentStatistic?.restaurant.latestTime }}</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="share-area"></div>
@@ -105,6 +153,25 @@ const userStore = useUserStore()
             flex: 1;
             margin: 0 20px;
             display: flex;
+            flex-direction: column;
+            .remark {
+                color: grey;
+            }
+        }
+    }
+}
+
+#classroom-data {
+    .data-line:nth-child(2) {
+        margin: 5px 0;
+    }
+}
+
+#canteen-data {
+    p {
+        margin: 2px 0;
+        span {
+            color: grey;
         }
     }
 }

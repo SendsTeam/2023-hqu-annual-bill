@@ -27,7 +27,7 @@ export function getFormattedTime(stamp: number): string {
     const minute = date.getMinutes()
     //获取秒
     const second = date.getSeconds()
-    return `${year}年${month}月${day}日-${hour}:${minute}:${second}`
+    return `${year}年${month}月${day}日 ${hour}:${minute}:${second}`
 }
 
 //微信重定向,重定向后可以在url中获取code
