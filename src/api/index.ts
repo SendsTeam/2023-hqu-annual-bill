@@ -126,7 +126,7 @@ class _API {
                 const learningStatistic: I_LearningStatistic = {
                     lesson: {
                         morningEight: origin.eight ? origin.eight : 0,
-                        eveningTen: origin.eveningTen ? origin.eveningTen : 0,
+                        eveningTen: origin.ten ? origin.ten : 0,
                         total: origin.sum_lesson,
                         most: {
                             name: origin.most_course,

@@ -1,6 +1,14 @@
 <template>
     <div id="summary-container">
         <div id="user-info">
+            <!-- 图标 -->
+            <n-space>
+                <img src="../assets/icon/favicon.ico" style="height: 30px" />
+                <GithubIcon />
+            </n-space>
+
+            <!-- 用户信息 -->
+            <div style="flex: 1"></div>
             <n-space>
                 <h2>Hi!</h2>
                 <n-badge value="0">
@@ -109,16 +117,23 @@
             </div>
             <n-divider />
             <div class="summary-line">
-                <img
-                    src="../assets/img/map/xiamen/active/canteen-active.png"
-                    style="height: 150px"
-                />
+                <div>
+                    <img
+                        src="../assets/img/map/xiamen/active/canteen-active.png"
+                        style="height: 150px"
+                    />
+                    <div class="remark">今年你最喜欢的食堂是</div>
+                    <div>
+                        {{ userStore.user.paymentStatistic?.restaurant.favorite.name }}
+                    </div>
+                </div>
+
                 <div id="canteen-data" class="summary-data">
                     <div class="data-line">
-                        <div class="remark">今年你最喜欢的食堂是</div>
+                        <!-- <div class="remark">今年你最喜欢的食堂是</div>
                         <div>
                             {{ userStore.user.paymentStatistic?.restaurant.favorite.name }}
-                        </div>
+                        </div> -->
                         <div class="remark">你在该食堂消费了</div>
                         <div>
                             {{ userStore.user.paymentStatistic?.restaurant.favorite.total }} 元
@@ -138,6 +153,7 @@
 </template>
 
 <script setup lang="ts">
+import GithubIcon from '@/components/icon/Github-Icon.vue'
 import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge, NDivider } from 'naive-ui'
 import { useUserStore } from '@/stores/modules/user'
 
@@ -153,20 +169,21 @@ const userStore = useUserStore()
 #user-info {
     display: flex;
     justify-content: end;
+    margin-bottom: 10px;
 }
 #summary-area {
     display: flex;
     flex-direction: column;
     .summary-line {
         display: flex;
+        .remark {
+            color: grey;
+        }
         .summary-data {
             flex: 1;
             margin: 0 20px;
             display: flex;
             flex-direction: column;
-            .remark {
-                color: grey;
-            }
         }
     }
 }
