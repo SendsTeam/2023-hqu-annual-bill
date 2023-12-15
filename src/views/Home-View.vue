@@ -12,13 +12,14 @@ import { useSettingStore } from '@/stores/modules/setting'
 
 //判断是哪个校区的,展示不同的背景图
 const settingStore = useSettingStore()
+const statusStore = useStatusStore()
 
 //next事件
 const next = () => {
-    router.push({ name: 'dormitory' })
+    router.push({ name: 'map' })
 }
 
-useStatusStore().isSettingAvailable = true //开放设置页
+statusStore.isSettingAvailable = true //开放设置页
 </script>
 
 <style scoped lang="less">

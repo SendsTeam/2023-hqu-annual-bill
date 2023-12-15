@@ -4,7 +4,7 @@
         :effect="unlockNextRoute"
         @click="nextRoute"
         :max-index="11"
-        next-route-name="library"
+        next-route-name="map"
     >
         <img
             v-show="visiableIndex >= 1"
@@ -85,7 +85,7 @@ const unlockNextRoute = () => {
 }
 const nextRoute = () => {
     if (isCartoonReady.value) {
-        router.push({ name: 'library' })
+        router.push({ name: 'map' })
     }
 }
 //#endregion

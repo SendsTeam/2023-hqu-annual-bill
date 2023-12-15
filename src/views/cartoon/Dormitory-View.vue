@@ -4,7 +4,7 @@
         :effect="unlockNext"
         @click="next"
         :max-index="9"
-        next-route-name="classroom"
+        next-route-name="map"
     >
         <img
             v-show="visiableIndex >= 1"
@@ -66,7 +66,7 @@ const unlockNext = () => {
 //下一个界面
 const next = () => {
     if (isCartoonReady.value) {
-        router.push({ name: 'classroom' })
+        router.push({ name: 'map' })
     }
 }
 </script>

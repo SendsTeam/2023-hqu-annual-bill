@@ -20,7 +20,7 @@
 
         <n-statistic label="截止目前已有" tabular-nums>
             <!-- 这里到时候少一位,然后setTimeOut +1 -->
-            <n-number-animation :from="0" :to="1140" />
+            <n-number-animation :from="0" :to="userStore.user.rankStatistic?.total" />
             <template #suffix>
                 <span class="animate__animated animate__fadeIn">位hquer解锁年度账单!</span>
             </template>
@@ -41,33 +41,33 @@
             <div class="summary-line">
                 <img
                     src="../assets/img/map/xiamen/active/library-active.png"
-                    style="height: 60px"
+                    style="height: 75px"
                 />
                 <div class="summary-data">
                     <n-statistic label="借书花销为" tabular-nums>
                         <!-- 这里因为有数值动画所以需要用v-if! -->
                         <n-number-animation
                             :from="0.0"
-                            :precision="2"
+                            :precision="1"
                             :to="userStore.user.paymentStatistic?.library.total"
                         />
-                        <template #suffix> 元 </template>
+                        <template #suffix> ￥ </template>
                     </n-statistic>
                 </div>
                 <div class="summary-data">
-                    <n-statistic label="其他花销￥为" tabular-nums>
+                    <n-statistic label="其他花销为" tabular-nums>
                         <!-- 这里因为有数值动画所以需要用v-if! -->
                         <n-number-animation
                             :from="0.0"
-                            :precision="2"
+                            :precision="1"
                             :to="userStore.user.paymentStatistic?.other.total"
                         />
-                        <template #suffix> 元 </template>
+                        <template #suffix> ￥ </template>
                     </n-statistic>
                 </div>
             </div>
             <n-divider />
-            <div class="summary-line" style="height: 120px">
+            <div class="summary-line" style="height: 130px">
                 <img
                     src="../assets/img/map/xiamen/active/classroom-active.png"
                     style="width: 150px"
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <n-divider />
-            <div class="summary-line">
+            <div class="summary-line" style="height: 200px">
                 <div>
                     <img
                         src="../assets/img/map/xiamen/active/canteen-active.png"

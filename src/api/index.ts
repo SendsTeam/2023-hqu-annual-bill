@@ -155,7 +155,8 @@ class _API {
             if (data.code === 1000) {
                 const origin = data.data
                 const rankStatistic: I_RankStatistic = {
-                    index: origin.index
+                    index: origin.index,
+                    total: origin.count
                 }
                 return rankStatistic
             } else {

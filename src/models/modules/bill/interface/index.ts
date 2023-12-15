@@ -39,4 +39,5 @@ export interface I_PaymentStatistic {
 
 export interface I_RankStatistic {
     index: number
+    total: number
 }

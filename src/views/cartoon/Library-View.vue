@@ -4,7 +4,7 @@
         :effect="unlockNextRoute"
         @click="nextRoute"
         :max-index="10"
-        next-route-name="canteen"
+        next-route-name="map"
     >
         <img
             v-show="visiableIndex >= 1"
@@ -83,9 +83,7 @@ const unlockNextRoute = () => {
 }
 const nextRoute = () => {
     if (isCartoonReady.value) {
-        router.push({ name: 'canteen' })
-    } else {
-        //TODO: 这里可以加个提示啥的
+        router.push({ name: 'map' })
     }
 }
 </script>

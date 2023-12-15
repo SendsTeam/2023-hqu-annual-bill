@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import router from '@/router'
-import { computed, h, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { computed, h, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useMessage, NIcon } from 'naive-ui'
 import { MdHourglass } from '@vicons/ionicons4'
 import FadeTransition from './Fade-Transition.vue'

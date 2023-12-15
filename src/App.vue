@@ -61,6 +61,7 @@ const touchEffect = (direction: 'left' | 'right' | 'up' | 'down') => {
 </script>
 
 <template>
+    <!-- 顶层touch监听 -->
     <touch-listener v-if="userStore.user.code" @effect="touchEffect">
         <!-- 注入消息Provider -->
         <n-message-provider>
