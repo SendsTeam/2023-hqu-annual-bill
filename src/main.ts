@@ -8,6 +8,11 @@ import router from './router'
 
 const app = createApp(App)
 
+//配置全局错误处理
+app.config.errorHandler = (error) => {
+    alert(`未捕获错误: ${error}`)
+}
+
 app.use(createPinia())
 app.use(router)
 

@@ -5,7 +5,9 @@ import {
     type I_PaymentStatistic,
     type I_RankStatistic
 } from '@/models/modules/bill/interface/index'
+import { type I_WxSignature } from '@/models/modules/wx/interface/index'
 import type { Ref } from 'vue'
+
 const baseUrl = 'https://api.sends.cc'
 class _API {
     private _userAPI = axios.create({
@@ -165,6 +167,29 @@ class _API {
             }
         } catch (error) {
             alert(`获取排名数据失败! ${error}`)
+            return null
+        }
+    }
+    //获取微信签名
+    public async getSignature(): Promise<I_WxSignature | null> {
+        try {
+            const { data } = await this._userAPI.post('jssdk', {
+                url: 'annual-bill.sends.cc'
+            })
+            if (data.code === 1000) {
+                const origin = data.data
+                return {
+                    appId: origin.app_id,
+                    timestamp: origin.timestamp,
+                    nonceStr: origin.nonce_str,
+                    signature: origin.signature
+                }
+            } else {
+                alert(`获取微信签名失败! ${data.msg}`)
+                return null
+            }
+        } catch (error) {
+            alert(`获取微信签名失败! ${error}`)
             return null
         }
     }

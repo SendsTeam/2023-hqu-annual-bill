@@ -21,6 +21,10 @@ export const useUserStore = defineStore('UserStore', {
             await this.user.getLearning()
             await this.user.getPayment()
             await this.user.getRank()
+        },
+        //初始化微信相关
+        async initWxSDK() {
+            await this.user.initWxSDK()
         }
     }
 })
