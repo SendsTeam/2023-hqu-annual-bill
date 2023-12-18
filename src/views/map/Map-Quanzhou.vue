@@ -93,6 +93,8 @@ const userStore = useUserStore()
 //用户移动动画
 //#region
 //预制内联属性:注意要使用transform,性能会更好
+//TODO: 后续可以按地图路径来设计动画(多个点过渡)
+//TODO: 最好禁止在地图页切换校区
 const positionMap = {
     door: {
         transform: 'translateX(260px) translateY(105px)'

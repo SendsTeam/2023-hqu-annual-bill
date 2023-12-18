@@ -22,18 +22,25 @@
             <!-- 这里到时候少一位,然后setTimeOut +1 -->
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.total" />
             <template #suffix>
-                <span class="animate__animated animate__fadeIn">位hquer解锁年度账单!</span>
+                <span>位hquer解锁年度账单!</span>
             </template>
         </n-statistic>
+
         <n-statistic label="恭喜你成为" tabular-nums>
             <template #prefix>
-                <span class="animate__animated animate__fadeIn">第</span>
+                <span>第</span>
             </template>
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.index" />
             <template #suffix>
-                <span class="animate__animated animate__fadeIn">名✨</span>
+                <span>名✨</span>
             </template>
         </n-statistic>
+
+        <!-- <n-space> -->
+            <!-- 分享 -->
+            <share-modal base="#summary-container" />
+            
+        <!-- </n-space> -->
 
         <n-divider />
 
@@ -154,9 +161,11 @@
 
 <script setup lang="ts">
 import GithubIcon from '@/components/icon/Github-Icon.vue'
-import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge, NDivider } from 'naive-ui'
+import ShareModal from '@/components/Share-Modal.vue'
+import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge, NDivider, NButton } from 'naive-ui'
 import { useUserStore } from '@/stores/modules/user'
 
+//Store getting
 const userStore = useUserStore()
 </script>
 
