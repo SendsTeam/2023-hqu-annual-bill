@@ -45,35 +45,34 @@ class _API {
     // 初始化之后要在本地存储标识!
     public initUser(token: string, status: Ref<string>): Promise<string> {
         return new Promise((resolve, reject) => {
-            if (localStorage.getItem('isInitialized')) {
-                status.value = '数据已初始化'
-                resolve('数据已初始化')
-            } else {
-                try {
-                    //开启ws
-                    const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
+            // 缓存
+            // if (localStorage.getItem('isInitialized')) {
+            //     status.value = '数据已初始化'
+            //     resolve('数据已初始化')
+            // } else {
+            try {
+                //开启ws
+                const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
 
-                    ws.onmessage = (evt) => {
-                        //注意ws传的是字符串JSON,要解析成JS对象
-                        const data = JSON.parse(evt.data)
-                        //更新状态
-                        status.value = data.msg
-                        if (data.code == 1000) {
-                            //初始化成功
-                            localStorage.setItem('isInitialized', 'true')
-                            resolve(data.msg)
-                        } else if (data.code == 1001) {
-                            //!爆满,交给调用链catch进行重进界面处理
-                            reject(data.msg)
-                        }
+                ws.onmessage = (evt) => {
+                    //注意ws传的是字符串JSON,要解析成JS对象
+                    const data = JSON.parse(evt.data)
+                    //更新状态
+                    status.value = data.msg
+                    if (data.code == 1000) {
+                        //初始化成功
+                        // localStorage.setItem('isInitialized', 'true')
+                        resolve(data.msg)
+                    } else if (data.code == 1001) {
+                        //!爆满,交给调用链catch进行重进界面处理
+                        reject(data.msg)
                     }
-                } catch (error) {
-                    alert(`初始化用户失败! ${error}`)
-                    reject(error)
                 }
+            } catch (error) {
+                alert(`初始化用户失败! ${error}`)
+                reject(error)
             }
         })
-        //TODO: 这里之后会重构成websocket
     }
     //获取付款信息
     public async getPayment(token: string): Promise<I_PaymentStatistic | null> {
@@ -171,10 +170,10 @@ class _API {
         }
     }
     //获取微信签名
-    public async getSignature(): Promise<I_WxSignature | null> {
+    public async getSignature(url: string = 'annual-bill.sends.cc'): Promise<I_WxSignature | null> {
         try {
             const { data } = await this._userAPI.post('jssdk', {
-                url: 'annual-bill.sends.cc'
+                url
             })
             if (data.code === 1000) {
                 const origin = data.data

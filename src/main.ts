@@ -13,6 +13,7 @@ app.config.errorHandler = (error) => {
     alert(`未捕获错误: ${error}`)
 }
 
+
 app.use(createPinia())
 app.use(router)
 

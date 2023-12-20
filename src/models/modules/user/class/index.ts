@@ -36,8 +36,10 @@ export class User {
     }
     //初始化微信客户端API
     public async initWxSDK() {
-        const signatureData = await API.getSignature()
+        const rightUrl = `http://192.168.31.168/?code=${this.code}`
+        const signatureData = await API.getSignature(rightUrl)
         if (signatureData) {
+            // alert(rightUrl)
             const { appId, timestamp, nonceStr, signature } = signatureData
             //拿到签名后开始配置
             wx.config({
@@ -53,7 +55,7 @@ export class User {
             wx.ready(() => {
                 wx.onMenuShareTimeline({
                     title: '年度账单',
-                    link: 'annual-bill.sends.cc',
+                    link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {},
                     cancel() {}
@@ -61,7 +63,7 @@ export class User {
                 wx.onMenuShareAppMessage({
                     title: '年度账单',
                     desc: '快来领取你的2023年度账单吧!',
-                    link: 'annual-bill.sends.cc',
+                    link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {},
                     cancel() {}
