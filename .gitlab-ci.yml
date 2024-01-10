@@ -19,6 +19,7 @@ build:
     - apt update && apt install zip
     - zip -r dist.zip ./dist/
   artifacts:
+    expire_in: 20min
     paths:
       - ./dist.zip
 
