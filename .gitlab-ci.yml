@@ -38,9 +38,9 @@ deploy:
   script:
     - rsync -e 'ssh -p 4242' -atv --delete --progress ./dist  ubuntu@hidden:/home/ubuntu/tmp/2023_annual_statement
     - if [ "$CI_ENVIRONMENT_NAME" == "production" ]; then 
-      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfronted.sh
+      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfronted.sh;
       else
-      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfrontedpre.sh
+      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfrontedpre.sh;
       fi
 
 
