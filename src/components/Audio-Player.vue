@@ -1,17 +1,22 @@
 <template>
-    <img v-if="active" id="audio-container" src="@/assets/icon/audio.png" />
+    <span style="display: none"></span>
 </template>
-
 <script setup lang="ts">
+//TODO 这里也许可以抽象到Store中
 import { useAudioStore } from '@/stores/modules/audio'
 import { useSettingStore } from '@/stores/modules/setting'
-import { computed } from 'vue'
+import { watchEffect } from 'vue'
 const audioStore = useAudioStore()
 const settingStore = useSettingStore()
 
-const active = computed(() => {
-    //开启了BGM并且正在播放
-    return settingStore.bgm && !audioStore.paused
+audioStore.load('./audio/bgm1.mp3')
+
+watchEffect(() => {
+    if (settingStore.bgm) {
+        audioStore.play()
+    } else {
+        audioStore.stop()
+    }
 })
 </script>
 

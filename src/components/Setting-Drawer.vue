@@ -85,13 +85,25 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
+                <n-list-item>
+                    <n-thing>
+                        <template #header> 4. 如何评价</template>
+                        <n-space vertical>
+                            <n-rate
+                                v-model:value="rate"
+                                clearable
+                                :on-update:value="updateRate"
+                            ></n-rate>
+                            <p v-text="rateNote" style="color: gray"></p>
+                        </n-space>
+                    </n-thing>
+                </n-list-item>
             </n-list>
         </n-drawer-content>
     </n-drawer>
 </template>
 
 <script setup lang="ts">
-import AudioPlayer from './Audio-Player.vue'
 import type { Placement } from 'naive-ui/es/drawer/src/DrawerBodyWrapper'
 import {
     NDrawer,
@@ -101,12 +113,13 @@ import {
     NThing,
     NSpace,
     NRadio,
-    NSwitch
+    NSwitch,
+    NRate
 } from 'naive-ui'
 import { useStatusStore } from '@/stores/modules/status'
 import type { Campus } from '@/models/modules/user/type'
 import { useSettingStore } from '@/stores/modules/setting'
-import { ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 
 const { drawerStatus } = defineProps<{
     drawerStatus: {
@@ -182,10 +195,45 @@ watch(
 
 //#endregion
 
+//评分设置
+//#region
+const rate = ref<number>(5)
+const rateNote = computed(() => {
+    let note: string = '好啊,很好啊'
+    if (!rate.value) {
+        note = '零昏'
+    } else if (rate.value=== 1) {
+        note = '拉了'
+    } else if (rate.value=== 2) {
+        note = '一般般吧'
+    } else if (rate.value === 3) {
+        note = '还不错的'
+    } else if (rate.value === 4) {
+        note = '很不错啊'
+    } else if (rate.value === 5) {
+        note = '好啊,很好啊'
+    }
+    return note
+})
+const updateRate = (value: number) => {
+    rate.value = value
+    //TODO 向后端发送请求更新
+
+}
+
+//#endregion
+
 //保存更改
+//#region
 const saveChange = () => {
     localStorage.setItem('setting', JSON.stringify(settingStore.$state))
 }
+//退出时保存更改
+onUnmounted(() => {
+    saveChange()
+})
+//#endregion
+
 //#endregion
 </script>
 

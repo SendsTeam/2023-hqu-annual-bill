@@ -24,6 +24,12 @@ export const useAudioStore = defineStore('AudioStore', {
         pause() {
             this.audio.pause()
             this.paused = true
+        },
+        //结束
+        stop(){
+            //暂停并归零播放头
+            this.pause()
+            this.audio.currentTime = 0
         }
     }
 })
