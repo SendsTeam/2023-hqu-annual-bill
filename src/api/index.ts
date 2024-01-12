@@ -53,7 +53,7 @@ class _API {
             try {
                 //开启ws
                 const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
-
+                
                 ws.onmessage = (evt) => {
                     //注意ws传的是字符串JSON,要解析成JS对象
                     const data = JSON.parse(evt.data)

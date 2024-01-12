@@ -3,7 +3,7 @@
         <n-layout-header>
             <n-space vertical>
                 <h2>✨欢迎来到年度账单✨</h2>
-                <n-divider></n-divider>
+                <!-- <n-divider></n-divider> -->
                 <p>在开始前,需要一些设置来确保你的体验</p>
                 <p>在你配置完之后,配置信息将被保存</p>
                 <p>再次访问年度账单将不会再出现这个界面</p>
@@ -18,7 +18,7 @@
                 <n-list>
                     <template #header> <h2>配置</h2> </template>
                     <n-list-item>
-                        <n-card :bordered="false" title="1. 校区">
+                        <n-card :bordered="false" title="1. 校区(必选)">
                             <n-space>
                                 <n-radio
                                     :checked="settingStore.campus === 'xiamen'"
@@ -51,7 +51,12 @@
                                 <img
                                     v-show="settingStore.bgm"
                                     src="@/assets/gif/chiikawa-02.jpg"
-                                    style="width: 40%"
+                                    style="width: 50%"
+                                />
+                                <img
+                                    v-show="!settingStore.bgm"
+                                    src="@/assets/gif/chiikawa-04.jpg"
+                                    style="width: 50%"
                                 />
                             </n-space>
                         </n-card>
@@ -198,7 +203,7 @@ const footerInfo = computed(() => {
         case 'huawen':
             return '非常好账单,爱来自华文校区'
         default:
-            return ''
+            return '你还没选择校区呢!'
     }
 })
 //#endregion

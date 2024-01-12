@@ -1,7 +1,6 @@
 <template>
-    <!-- 分享页 -->
-    <n-button v-show="!isShared" @click="share">生成图片</n-button>
-    <n-modal v-model:show="showModal">
+    <n-button style="margin-top: 10px" v-show="!isHide" @click="share">生成图片</n-button>
+    <n-modal v-model:show="isShowModal">
         <img :src="imgUrl" style="width: 75%; height: 75%" />
     </n-modal>
 </template>
@@ -9,37 +8,36 @@
 <script setup lang="ts">
 import { NButton, NModal } from 'naive-ui'
 import html2canvas from 'html2canvas'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 
 const { base } = defineProps<{
     base: string //指定基于哪个元素生成Canvas
 }>()
+const emit = defineEmits(['openModal', 'closeModal'])
 
 //分享
 //#region
 
 //分享图片的路径
 const imgUrl = ref('')
-const isShared = ref(false)
-const showModal = ref(false)
-//是否能被分享
-const canBeShared = ref(false)
+const isHide = ref(false)
+const isShowModal = ref(false)
+
+watch(isShowModal, (value) => (value ? emit('openModal') : emit('closeModal')))
 
 //分享函数
 const share = async () => {
-    //锁
-    if (!canBeShared.value) return
 
     //分享时要把部分东西隐藏
-    isShared.value = true
+    isHide.value = true
     //这里要等待vue把视图更新后再执行canvas化
     await nextTick()
 
     try {
         //如果已经有图片了就不用重复生成了
         if (imgUrl.value) {
-            isShared.value = false
-            showModal.value = true
+            isHide.value = false
+            isShowModal.value = true
             return
         }
         //canvas化
@@ -51,17 +49,17 @@ const share = async () => {
         })
         //挂载图片路径
         imgUrl.value = canvas.toDataURL('image/png')
-        isShared.value = false
-        showModal.value = true
+        isHide.value = false
+        isShowModal.value = true
     } catch (error) {
         alert(error)
     }
 }
 //挂载后允许分享
 onMounted(() => {
-    canBeShared.value = true
+    // canBeShared.value = true
 })
 //#endregion
 </script>
 
-<style scoped></style>
+<style lang="less" scoped></style>

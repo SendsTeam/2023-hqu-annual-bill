@@ -36,11 +36,12 @@
             </template>
         </n-statistic>
 
-        <!-- <n-space> -->
-            <!-- 分享 -->
-            <share-modal base="#summary-container" />
-            
-        <!-- </n-space> -->
+        <!-- 分享 -->
+        <share-modal
+            base="#summary-container"
+            @open-modal="isOpenModal = true"
+            @close-modal="isOpenModal = false"
+        />
 
         <n-divider />
 
@@ -162,11 +163,14 @@
 <script setup lang="ts">
 import GithubIcon from '@/components/icon/Github-Icon.vue'
 import ShareModal from '@/components/Share-Modal.vue'
-import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge, NDivider, NButton } from 'naive-ui'
+import { NStatistic, NNumberAnimation, NSpace, NAvatar, NBadge, NDivider } from 'naive-ui'
 import { useUserStore } from '@/stores/modules/user'
+import { ref } from 'vue'
 
 //Store getting
 const userStore = useUserStore()
+//是否开启了Modal
+const isOpenModal = ref(false)
 </script>
 
 <style lang="less" scoped>
