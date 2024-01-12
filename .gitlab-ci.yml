@@ -19,6 +19,7 @@ build:
     - apt update && apt install zip
     - zip -r dist.zip ./dist/
   artifacts:
+    expire_in: 20min
     paths:
       - ./dist.zip
 
@@ -37,7 +38,11 @@ deploy:
     - ssh-keyscan -p 4242 hidden >> ~/.ssh/known_hosts
   script:
     - rsync -e 'ssh -p 4242' -atv --delete --progress ./dist  ubuntu@hidden:/home/ubuntu/tmp/2023_annual_statement
-    - ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfronted.sh
+    - if [ "$CI_ENVIRONMENT_NAME" == "production" ]; then 
+      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfronted.sh;
+      else
+      ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfrontedpre.sh;
+      fi
 
 
 # flushcache:
