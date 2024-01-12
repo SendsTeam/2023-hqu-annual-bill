@@ -12,11 +12,17 @@
         <n-drawer-content>
             <n-list>
                 <template #header>
-                    <h2>
-                        配置
-                        <span id="tip" v-show="tip" v-text="tip"></span>
+                    <h2 id="drawer-header">
+                        <div style="display: flex">
+                            <span>配置</span>
+                            <div style="flex: 1; display: flex; flex-direction: row-reverse">
+                                {{ batteryStatus }}
+                            </div>
+                        </div>
+                        <p id="tip" v-show="tip" v-text="tip"></p>
                     </h2>
                 </template>
+                <!-- 校区 -->
                 <n-list-item>
                     <n-thing>
                         <template #header> 1. 校区</template>
@@ -42,6 +48,7 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
+                <!-- BGM -->
                 <n-list-item>
                     <n-thing>
                         <template #header> 2. BGM</template>
@@ -63,6 +70,7 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
+                <!-- 漫画播放 -->
                 <n-list-item>
                     <n-thing>
                         <template #header> 3. 漫画播放</template>
@@ -85,6 +93,7 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
+                <!-- 评价 -->
                 <n-list-item>
                     <n-thing>
                         <template #header> 4. 如何评价</template>
@@ -101,6 +110,7 @@
             </n-list>
         </n-drawer-content>
     </n-drawer>
+    <div id="black-hole" v-show="!battery"></div>
 </template>
 
 <script setup lang="ts">
@@ -120,6 +130,7 @@ import { useStatusStore } from '@/stores/modules/status'
 import type { Campus } from '@/models/modules/user/type'
 import { useSettingStore } from '@/stores/modules/setting'
 import { computed, onUnmounted, ref, watch } from 'vue'
+import { useAudioStore } from '@/stores/modules/audio'
 
 const { drawerStatus } = defineProps<{
     drawerStatus: {
@@ -127,6 +138,10 @@ const { drawerStatus } = defineProps<{
         direction: Placement
     }
 }>()
+
+//Store Getting
+const audioStore = useAudioStore()
+const settingStore = useSettingStore()
 
 //控制Drawer
 //#region
@@ -158,10 +173,8 @@ const onAfterLeave = () => {
 //具体设置
 //#region
 
-//获取settingStore,让这里的配置直接同步Store!
-const settingStore = useSettingStore()
-
 //提示
+//#region
 const tip = ref('')
 let timeoutId: number
 const showTip = (content: string, delay: number = 2000) => {
@@ -171,6 +184,45 @@ const showTip = (content: string, delay: number = 2000) => {
         tip.value = ''
     }, delay)
 }
+//#endregion
+
+//电量彩蛋
+//#region
+const battery = ref(100)
+let batteryIntervalId = setInterval(() => {
+    if (battery.value) {
+        battery.value--
+    } else {
+        //当电量为0时触发停电神曲
+        clearInterval(batteryIntervalId)
+        audioStore.swap('battery.mp3')
+        setTimeout(() => {
+            battery.value = 721
+            //TODO这里是否应该恢复之前的bgm
+            audioStore.swap(audioStore.lastAudioName)
+        }, 1000 * 61)
+    }
+}, 5000)
+const batteryStatus = computed(() => {
+    if (battery.value === 721) {
+        return '🏆' + battery.value + '%'
+    }
+    if (battery.value > 88) {
+        return '🟩🟩🟩🟩🟩' + battery.value + '%'
+    } else if (battery.value > 66) {
+        return '🟩🟩🟩🟩' + battery.value + '%'
+    } else if (battery.value > 55) {
+        return '🟩🟩🟩' + battery.value + '%'
+    } else if (battery.value > 54) {
+        return '🟨🟨🟨' + battery.value + '%'
+    } else if (battery.value > 33) {
+        return '🟨🟨' + battery.value + '%'
+    } else {
+        return '🟥' + battery.value + '%'
+    }
+})
+
+//#endregion
 
 //校区
 //#region
@@ -202,9 +254,9 @@ const rateNote = computed(() => {
     let note: string = '好啊,很好啊'
     if (!rate.value) {
         note = '零昏'
-    } else if (rate.value=== 1) {
+    } else if (rate.value === 1) {
         note = '拉了'
-    } else if (rate.value=== 2) {
+    } else if (rate.value === 2) {
         note = '一般般吧'
     } else if (rate.value === 3) {
         note = '还不错的'
@@ -218,7 +270,6 @@ const rateNote = computed(() => {
 const updateRate = (value: number) => {
     rate.value = value
     //TODO 向后端发送请求更新
-
 }
 
 //#endregion
@@ -237,9 +288,23 @@ onUnmounted(() => {
 //#endregion
 </script>
 
-<style scoped>
-#tip {
-    color: gray;
-    font-size: 16px;
+<style lang="less" scoped>
+#drawer-header {
+    font-weight: normal;
+    #tip {
+        color: gray;
+        font-size: 16px;
+    }
+}
+#black-hole {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99999999;
+    background-color: black;
 }
 </style>
