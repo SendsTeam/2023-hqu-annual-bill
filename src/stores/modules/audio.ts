@@ -4,6 +4,7 @@ import { ref, type Ref } from 'vue'
 export const useAudioStore = defineStore('AudioStore', () => {
     const baseUrl = './audio/'
     const audio = new Audio(baseUrl + 'default.mp3')
+    audio.loop = true //默认循环
     const paused = ref(true)
     const hasLoaded = ref(false)
     //暂停前的播放位
@@ -17,17 +18,18 @@ export const useAudioStore = defineStore('AudioStore', () => {
     type SupportAudio = 'battery.mp3' | 'bgm1.mp3' | 'default.mp3'
 
     //装载音频
-    function load(audioName: SupportAudio) {
+    function load(audioName: SupportAudio, loop: boolean = false) {
         lastAudioName.value = currentAudioName.value
         currentAudioName.value = audioName
         audio.src = baseUrl + audioName
+        audio.loop = loop
     }
 
     //播放音乐
     async function play() {
         try {
-            await audio.play()
             paused.value = false
+            await audio.play()
         } catch (error) {
             alert(error)
         }
@@ -35,9 +37,9 @@ export const useAudioStore = defineStore('AudioStore', () => {
 
     //暂停
     function pause(): number {
+        paused.value = true
         audio.pause()
         lastTime.value = audio.currentTime
-        paused.value = true
         return audio.currentTime
     }
 
@@ -46,13 +48,13 @@ export const useAudioStore = defineStore('AudioStore', () => {
         //暂停并归零播放头
         pause()
         audio.currentTime = 0
-        lastTime.value = audio.currentTime
+        lastTime.value = 0
     }
 
     //直接切换下一首歌
-    function swap(audioName: SupportAudio) {
+    function swap(audioName: SupportAudio, loop: boolean = false) {
         stop()
-        load(audioName)
+        load(audioName, loop)
         play()
     }
 
@@ -66,41 +68,8 @@ export const useAudioStore = defineStore('AudioStore', () => {
         lastTime,
         lastAudioName,
         currentAudioName,
-        // lastAudio
+        lastAudio
     }
 })
 
-// export const useAudioStore = defineStore('AudioStore', {
-//     state: () => ({
-//         audio: new Audio(),
-//         hasLoaded: false, //是否已经装载音频
-//         paused: true //是否暂停
-//     }),
-//     actions: {
-//         //装载音频文件
-//         load(src: string = './audio/default.mp3') {
-//             this.audio.src = src
-//         },
-//         //播放
-//         async play() {
-//             if (!this.audio.src) return
-//             try {
-//                 await this.audio.play()
-//                 this.paused = false
-//             } catch (error) {
-//                 alert(error)
-//             }
-//         },
-//         //暂停
-//         pause() {
-//             this.audio.pause()
-//             this.paused = true
-//         },
-//         //结束
-//         stop() {
-//             //暂停并归零播放头
-//             this.pause()
-//             this.audio.currentTime = 0
-//         }
-//     }
-// })
+

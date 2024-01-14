@@ -16,50 +16,30 @@
 
         <!-- 教学楼 -->
         <img
-            v-if="stautsStore.map.active.classroom"
-            src="../../assets/img/map/xiamen/active/classroom-active.png"
+            src="../../assets/img/map/xiamen/building/classroom.png"
             class="map-building map-classroom"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/xiamen/unactive/classroom-unactive.png"
-            class="map-building map-classroom"
+            :class="!stautsStore.map.active.classroom ? 'gray' : ''"
         />
 
         <!-- 图书馆 -->
         <img
-            v-if="stautsStore.map.active.library"
-            src="../../assets/img/map/xiamen/active/library-active.png"
+            src="../../assets/img/map/xiamen/building/library.png"
             class="map-building map-library"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/xiamen/unactive/library-unactive.png"
-            class="map-building map-library"
+            :class="!stautsStore.map.active.library ? 'gray' : ''"
         />
 
         <!-- 宿舍 -->
         <img
-            v-if="stautsStore.map.active.dormitory"
-            src="../../assets/img/map/xiamen/active/dormitory-active.png"
+            src="../../assets/img/map/xiamen/building/dormitory.png"
             class="map-building map-dormitory"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/xiamen/unactive/dormitory-unactive.png"
-            class="map-building map-dormitory"
+            :class="!stautsStore.map.active.dormitory ? 'gray' : ''"
         />
 
         <!-- 食堂 -->
         <img
-            v-if="stautsStore.map.active.canteen"
-            src="../../assets/img/map/xiamen/active/canteen-active.png"
+            src="../../assets/img/map/xiamen/building/canteen.png"
             class="map-building map-canteen"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/xiamen/unactive/canteen-unactive.png"
-            class="map-building map-canteen"
+            :class="!stautsStore.map.active.canteen ? 'gray' : ''"
         />
     </div>
 </template>

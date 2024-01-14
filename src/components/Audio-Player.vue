@@ -11,7 +11,7 @@ import { watch } from 'vue'
 const audioStore = useAudioStore()
 const settingStore = useSettingStore()
 
-audioStore.load('bgm1.mp3')
+audioStore.load('bgm1.mp3', true)
 const { bgm } = storeToRefs(settingStore)
 watch(bgm, (v) => {
     if (v) {

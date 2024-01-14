@@ -51,10 +51,15 @@
                 <!-- BGM -->
                 <n-list-item>
                     <n-thing>
-                        <template #header> 2. BGM</template>
+                        <template #header>
+                            2. BGM
+                            <p style="color: gray; font-size: 10px">
+                                重新进入后需要重新开关bgm才能生效。
+                            </p>
+                        </template>
                         <n-space vertical>
                             <n-switch v-model:value="settingStore.bgm">
-                                <template #checked> 非常好BGM! </template>
+                                <template #checked> 一如往常的风景~ </template>
                                 <template #unchecked> 真的不听听吗 </template>
                             </n-switch>
                             <img
@@ -93,16 +98,23 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
-                <!-- 评价 -->
+                <!-- 如何评价xxx -->
                 <n-list-item>
                     <n-thing>
-                        <template #header> 4. 如何评价</template>
+                        <template #header> 4. 如何评价本次活动</template>
                         <n-space vertical>
-                            <n-rate
-                                v-model:value="rate"
-                                clearable
-                                :on-update:value="updateRate"
-                            ></n-rate>
+                            <n-space>
+                                <div style="display: flex">
+                                    <n-rate
+                                        style="margin: 0 auto"
+                                        v-model:value="rate"
+                                        clearable
+                                        :on-update:value="updateRate"
+                                    ></n-rate>
+                                </div>
+                                <n-button size="small">提交</n-button>
+                            </n-space>
+
                             <p v-text="rateNote" style="color: gray"></p>
                         </n-space>
                     </n-thing>
@@ -124,7 +136,9 @@ import {
     NSpace,
     NRadio,
     NSwitch,
-    NRate
+    NRate,
+    NButton,
+    useMessage
 } from 'naive-ui'
 import { useStatusStore } from '@/stores/modules/status'
 import type { Campus } from '@/models/modules/user/type'
@@ -196,13 +210,17 @@ let batteryIntervalId = setInterval(() => {
         //当电量为0时触发停电神曲
         clearInterval(batteryIntervalId)
         audioStore.swap('battery.mp3')
+        useMessage().success('噔 噔 咚')
         setTimeout(() => {
             battery.value = 721
             //TODO这里是否应该恢复之前的bgm
-            audioStore.swap(audioStore.lastAudioName)
+            audioStore.swap(audioStore.lastAudioName, true)
         }, 1000 * 61)
     }
 }, 5000)
+onUnmounted(() => {
+    clearInterval(batteryIntervalId)
+})
 const batteryStatus = computed(() => {
     if (battery.value === 721) {
         return '🏆' + battery.value + '%'
@@ -269,6 +287,9 @@ const rateNote = computed(() => {
 })
 const updateRate = (value: number) => {
     rate.value = value
+}
+
+const submitRate = ()=>{
     //TODO 向后端发送请求更新
 }
 

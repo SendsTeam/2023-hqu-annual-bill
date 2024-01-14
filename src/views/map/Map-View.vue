@@ -1,5 +1,7 @@
 <template>
-    <component :is="maps[settingStore.campus as Campus]"></component>
+    <keep-alive>
+        <component :is="maps[settingStore.campus as Campus]"></component>
+    </keep-alive>
 </template>
 
 <script setup lang="ts">

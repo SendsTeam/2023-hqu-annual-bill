@@ -19,50 +19,30 @@
 
         <!-- 教学楼 -->
         <img
-            v-if="stautsStore.map.active.classroom"
-            src="../../assets/img/map/longzhouchi/active/classroom-active.png"
+            src="../../assets/img/map/longzhouchi/building/classroom.png"
             class="map-building map-classroom"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/longzhouchi/unactive/classroom-unactive.png"
-            class="map-building map-classroom"
+            :class="!stautsStore.map.active.classroom ? 'gray' : ''"
         />
 
         <!-- 图书馆 -->
         <img
-            v-if="stautsStore.map.active.library"
-            src="../../assets/img/map/longzhouchi/active/library-active.png"
+            src="../../assets/img/map/longzhouchi/building/library.png"
             class="map-building map-library"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/longzhouchi/unactive/library-unactive.png"
-            class="map-building map-library"
+            :class="!stautsStore.map.active.library ? 'gray' : ''"
         />
 
         <!-- 宿舍 -->
         <img
-            v-if="stautsStore.map.active.dormitory"
-            src="../../assets/img/map/longzhouchi/active/dormitory-active.png"
+            src="../../assets/img/map/longzhouchi/building/dormitory.png"
             class="map-building map-dormitory"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/longzhouchi/unactive/dormitory-unactive.png"
-            class="map-building map-dormitory"
+            :class="!stautsStore.map.active.dormitory ? 'gray' : ''"
         />
 
         <!-- 食堂 -->
         <img
-            v-if="stautsStore.map.active.canteen"
-            src="../../assets/img/map/longzhouchi/active/canteen-active.png"
+            src="../../assets/img/map/longzhouchi/building/canteen.png"
             class="map-building map-canteen"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/longzhouchi/unactive/canteen-unactive.png"
-            class="map-building map-canteen"
+            :class="!stautsStore.map.active.canteen ? 'gray' : ''"
         />
     </div>
 </template>
@@ -175,6 +155,10 @@ onMounted(() => {
     width: 30px;
     height: 30px;
     transition: all 2s;
+}
+
+.gray {
+    filter: grayscale(100%);
 }
 .map-background {
     width: 100%;

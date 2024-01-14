@@ -19,62 +19,37 @@
 
         <!-- 大门 -->
         <img
-            v-if="stautsStore.map.active.door"
-            src="../../assets/img/map/quanzhou/active/door-active.png"
+            src="../../assets/img/map/quanzhou/building/door.png"
             class="map-building map-door"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/quanzhou/unactive/door-unactive.png"
-            class="map-building map-door"
+            :class="!stautsStore.map.active.door ? 'gray' : ''"
         />
 
         <!-- 教学楼 -->
         <img
-            v-if="stautsStore.map.active.classroom"
-            src="../../assets/img/map/quanzhou/active/classroom-active.png"
+            src="../../assets/img/map/quanzhou/building/classroom.png"
             class="map-building map-classroom"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/quanzhou/unactive/classroom-unactive.png"
-            class="map-building map-classroom"
+            :class="!stautsStore.map.active.classroom ? 'gray' : ''"
         />
 
         <!-- 图书馆 -->
         <img
-            v-if="stautsStore.map.active.library"
-            src="../../assets/img/map/quanzhou/active/library-active.png"
+            src="../../assets/img/map/quanzhou/building/library.png"
             class="map-building map-library"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/quanzhou/unactive/library-unactive.png"
-            class="map-building map-library"
+            :class="!stautsStore.map.active.library ? 'gray' : ''"
         />
 
         <!-- 宿舍 -->
         <img
-            v-if="stautsStore.map.active.dormitory"
-            src="../../assets/img/map/quanzhou/active/dormitory-active.png"
+            src="../../assets/img/map/quanzhou/building/dormitory.png"
             class="map-building map-dormitory"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/quanzhou/unactive/dormitory-unactive.png"
-            class="map-building map-dormitory"
+            :class="!stautsStore.map.active.dormitory ? 'gray' : ''"
         />
 
         <!-- 食堂 -->
         <img
-            v-if="stautsStore.map.active.canteen"
-            src="../../assets/img/map/quanzhou/active/canteen-active.png"
+            src="../../assets/img/map/quanzhou/building/canteen.png"
             class="map-building map-canteen"
-        />
-        <img
-            v-else
-            src="../../assets/img/map/quanzhou/unactive/canteen-unactive.png"
-            class="map-building map-canteen"
+            :class="!stautsStore.map.active.canteen ? 'gray' : ''"
         />
     </div>
 </template>
@@ -186,6 +161,10 @@ onMounted(() => {
     width: 30px;
     height: 30px;
     transition: all 2s;
+}
+
+.gray {
+    filter: grayscale(100%);
 }
 .map-background {
     width: 100%;
