@@ -156,13 +156,12 @@ img {
   display: flex;
   flex-direction: column;
   font-size: 10px;
-  width: 129px;
-  height: 250px;
+  width: 140px;
+  height: 270px;
   top: 57%;
-  left: 53%;
+  left: 54%;
   z-index: 1;
   padding: 5px;
-  /*background: coral ;*/
 }
 .remark {
   color: grey;
