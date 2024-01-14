@@ -33,9 +33,9 @@
                                     @change="changeCampus"
                                 />
                                 <n-radio
-                                    :checked="settingStore.campus === 'huawen'"
-                                    label="华文校区"
-                                    value="huawen"
+                                    :checked="settingStore.campus === 'longzhouchi'"
+                                    label="龙舟池校区"
+                                    value="longzhouchi"
                                     @change="changeCampus"
                                 />
                             </n-space>
@@ -132,7 +132,6 @@ import {
     NLayoutContent,
     NLayoutFooter,
     NSpace,
-    NDivider,
     NSwitch,
     NCard,
     NList,
@@ -200,8 +199,8 @@ const footerInfo = computed(() => {
             return '非常好账单,爱来自厦门校区'
         case 'quanzhou':
             return '非常好账单,爱来自泉州校区'
-        case 'huawen':
-            return '非常好账单,爱来自华文校区'
+        case 'longzhouchi':
+            return '非常好账单,爱来自龙舟池校区'
         default:
             return '你还没选择校区呢!'
     }

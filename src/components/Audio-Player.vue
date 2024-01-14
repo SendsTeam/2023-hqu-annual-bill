@@ -1,4 +1,5 @@
 <template>
+    <!-- 不显示 -->
     <span style="display: none"></span>
 </template>
 <script setup lang="ts">
@@ -12,14 +13,13 @@ const settingStore = useSettingStore()
 
 audioStore.load('bgm1.mp3')
 const { bgm } = storeToRefs(settingStore)
-watch(bgm,(v)=>{
-    if (v){
+watch(bgm, (v) => {
+    if (v) {
         audioStore.play()
-    }else{
+    } else {
         audioStore.stop()
     }
 })
-
 </script>
 
 <style scoped>

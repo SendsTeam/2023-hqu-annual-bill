@@ -40,9 +40,9 @@
                                 @change="changeCampus"
                             />
                             <n-radio
-                                :checked="settingStore.campus === 'huawen'"
-                                label="华文校区"
-                                value="huawen"
+                                :checked="settingStore.campus === 'longzhouchi'"
+                                label="龙舟池校区"
+                                value="longzhouchi"
                                 @change="changeCampus"
                             />
                         </n-space>

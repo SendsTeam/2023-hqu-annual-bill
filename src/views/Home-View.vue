@@ -1,5 +1,10 @@
 <template>
-    <div id="home-container" ref="containerRef" :class="settingStore.campus" @click="next">
+    <div
+        id="home-container"
+        ref="containerRef"
+        :class="settingStore.campus === 'longzhouchi' ? 'xiamen' : settingStore.campus"
+        @click="next"
+    >
         <fade-transition id="tip">点击任意处继续!</fade-transition>
     </div>
 </template>

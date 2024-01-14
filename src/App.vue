@@ -61,15 +61,31 @@ const touchEffect = (direction: 'left' | 'right' | 'up' | 'down') => {
 </script>
 
 <template>
-    <!-- 顶层touch监听 -->
-    <touch-listener v-if="userStore.user.code" @effect="touchEffect">
-        <!-- 注入消息Provider -->
+    <!-- 顶层监听触摸 -->
+    <touch-listener
+        :min-touch-distance-x="150"
+        :min-touch-distance-y="200"
+        v-if="userStore.user.code"
+        @effect="touchEffect"
+    >
+        <!-- 注入naive-ui的消息Provider -->
         <n-message-provider>
-            <router-view></router-view>
+            <!-- 路由过渡~ 记得要加上mode="out-in" 先执行离开动画再执行进入动画,让动画更加平滑 -->
+            <router-view v-slot="{ Component }">
+                <transition
+                    name="fade"
+                    mode="out-in"
+                    enter-active-class="animate__animated animate__fadeIn"
+                    leave-active-class="animate__animated animate__fadeOut"
+                >
+                    <component :is="Component" />
+                </transition>
+            </router-view>
         </n-message-provider>
-        <!-- 设置页 -->
+        <!-- 设置抽屉 -->
         <setting-drawer :drawer-status="drawerStatus"></setting-drawer>
     </touch-listener>
+    <!-- 音频播放器 -->
     <audio-player />
 </template>
 
