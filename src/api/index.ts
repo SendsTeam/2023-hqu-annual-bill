@@ -45,7 +45,7 @@ class _API {
     // 初始化之后要在本地存储标识!
     public initUser(token: string, status: Ref<string>): Promise<string> {
         return new Promise((resolve, reject) => {
-            // 缓存
+            // !缓存 已弃用,不建议开启!!!
             // if (localStorage.getItem('isInitialized')) {
             //     status.value = '数据已初始化'
             //     resolve('数据已初始化')
@@ -53,7 +53,7 @@ class _API {
             try {
                 //开启ws
                 const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
-                
+
                 ws.onmessage = (evt) => {
                     //注意ws传的是字符串JSON,要解析成JS对象
                     const data = JSON.parse(evt.data)
@@ -191,6 +191,21 @@ class _API {
             alert(`获取微信签名失败! ${error}`)
             return null
         }
+    }
+    //上传评分
+    public async uploadRate(appraise: number, token: string): Promise<void> {
+        try {
+            await this._yearBillAPI.post('appraise', {
+                appraise
+            }, {
+                headers: {
+                    token
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 }
 

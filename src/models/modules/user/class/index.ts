@@ -57,16 +57,16 @@ export class User {
                     title: '年度账单',
                     link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() {},
-                    cancel() {}
+                    success() { },
+                    cancel() { }
                 })
                 wx.onMenuShareAppMessage({
                     title: '年度账单',
                     desc: '快来领取你的2023年度账单吧!',
                     link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() {},
-                    cancel() {}
+                    success() { },
+                    cancel() { }
                 })
             })
         }
@@ -79,5 +79,9 @@ export class User {
     }
     public async getRank() {
         this.rankStatistic = await API.getRank(this.token)
+    }
+    //评分
+    public async uploadRate(appraise: number) {
+        await API.uploadRate(appraise, this.token)
     }
 }

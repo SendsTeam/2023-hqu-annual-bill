@@ -47,10 +47,7 @@
 
         <div id="summary-area">
             <div class="summary-line">
-                <img
-                    src="../assets/img/map/xiamen/active/library-active.png"
-                    style="height: 75px"
-                />
+                <img src="../assets/img/map/xiamen/building/library.png" style="height: 75px" />
                 <div class="summary-data">
                     <n-statistic label="借书花销为" tabular-nums>
                         <!-- 这里因为有数值动画所以需要用v-if! -->
@@ -77,7 +74,7 @@
             <n-divider />
             <div class="summary-line" style="height: 130px">
                 <img
-                    src="../assets/img/map/xiamen/active/classroom-active.png"
+                    src="../assets/img/map/xiamen/building/classroom.png"
                     style="width: 150px"
                 />
                 <div id="classroom-data" class="summary-data">
@@ -127,7 +124,7 @@
             <div class="summary-line" style="height: 200px">
                 <div>
                     <img
-                        src="../assets/img/map/xiamen/active/canteen-active.png"
+                        src="../assets/img/map/xiamen/building/canteen.png"
                         style="height: 150px"
                     />
                     <div class="remark">今年你最喜欢的食堂是</div>

@@ -112,7 +112,13 @@
                                         :on-update:value="updateRate"
                                     ></n-rate>
                                 </div>
-                                <n-button size="small">提交</n-button>
+                                <n-button
+                                    :disabled="hasSubmittedRate"
+                                    @click="submitRate"
+                                    size="small"
+                                >
+                                    提交
+                                </n-button>
                             </n-space>
 
                             <p v-text="rateNote" style="color: gray"></p>
@@ -145,6 +151,7 @@ import type { Campus } from '@/models/modules/user/type'
 import { useSettingStore } from '@/stores/modules/setting'
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useAudioStore } from '@/stores/modules/audio'
+import { useUserStore } from '../stores/modules/user'
 
 const { drawerStatus } = defineProps<{
     drawerStatus: {
@@ -268,7 +275,12 @@ watch(
 //评分设置
 //#region
 const rate = ref<number>(5)
+const hasSubmittedRate = ref(false)
 const rateNote = computed(() => {
+    if (hasSubmittedRate.value) {
+        return '感谢您的评价!'
+    }
+
     let note: string = '好啊,很好啊'
     if (!rate.value) {
         note = '零昏'
@@ -289,8 +301,12 @@ const updateRate = (value: number) => {
     rate.value = value
 }
 
-const submitRate = ()=>{
-    //TODO 向后端发送请求更新
+const submitRate = () => {
+    if (hasSubmittedRate.value) {
+        return
+    }
+    useUserStore().uploadRate(Math.floor(rate.value))
+    hasSubmittedRate.value = true
 }
 
 //#endregion

@@ -5,6 +5,7 @@ import type { Ref } from 'vue'
 
 export const useUserStore = defineStore('UserStore', {
     state: (): I_UserStoreState => ({
+        //维护了一个user实例
         user: new User()
     }),
     actions: {
@@ -16,7 +17,7 @@ export const useUserStore = defineStore('UserStore', {
             await this.user.initUser(status)
         },
         //获取流水
-        //这里封装了调用细节
+        //注意这里封装了调用细节
         async getStatistics() {
             await this.user.getLearning()
             await this.user.getPayment()
@@ -25,6 +26,10 @@ export const useUserStore = defineStore('UserStore', {
         //初始化微信相关
         async initWxSDK() {
             await this.user.initWxSDK()
+        },
+        async uploadRate(appraise: number) {
+            await this.user.uploadRate(appraise)
         }
+
     }
 })
