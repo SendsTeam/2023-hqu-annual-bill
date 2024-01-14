@@ -58,19 +58,25 @@
                   <n-statistic label="今年你最喜欢的食堂" tabular-nums>
                     <!-- 这里要做个字体随长度动态缩放 -->
                       <div
-                          class="animate__animated animate__fadeIn course-name"
+                          class="animate__animated animate__fadeIn canteen-name"
                           v-show="visiableIndex >= 11"
                       >
                         {{ userStore.user.paymentStatistic?.restaurant.favorite.name }}
                       </div>
-
-                            <div
-                                class="animate__animated animate__fadeIn course-name"
-                                v-show="visiableIndex >= 12"
-                            >
-                              <div class="remark ">你在该食堂消费了</div>
-                              <div class="course-name ">{{userStore.user.paymentStatistic?.restaurant.favorite.total }}元</div>
-                            </div>
+                  </n-statistic>
+                  <n-statistic label="你在该食堂消费了" tabular-nums >
+                    <span class="animate__animated animate__fadeIn" v-if="visiableIndex >= 12">
+                            <n-number-animation
+                                :from="0.0"
+                                :precision="2"
+                                :to="userStore.user.paymentStatistic?.restaurant.favorite.total"
+                            />
+                        </span>
+                    <span
+                        class="animate__animated animate__fadeIn "
+                        v-show="visiableIndex >= 13"
+                    >元</span
+                    >
                   </n-statistic>
                   <n-statistic label="你的食堂支出一共是" tabular-nums >
                     <!-- 这里因为有数值动画所以需要用v-if! -->
@@ -82,19 +88,19 @@
                             />
                         </span>
                     <span
-                      class="animate__animated animate__fadeIn course-name"
+                      class="animate__animated animate__fadeIn "
                       v-show="visiableIndex >= 15"
                   >元</span
                   >
                     <div
-                        class="animate__animated animate__fadeIn course-name"
+                        class="animate__animated animate__fadeIn "
                         v-show="visiableIndex >= 16"
                     >
                       <div class="remark ">你最早的干饭时间是</div>
                       <div class="time-name ">{{userStore.user.paymentStatistic?.restaurant.earliestTime }}</div>
                     </div>
                     <div
-                        class="animate__animated animate__fadeIn course-name"
+                        class="animate__animated animate__fadeIn "
                         v-show="visiableIndex >= 17"
                     >
                       <div class="remark ">你最晚的干饭时间是</div>
@@ -162,12 +168,10 @@ img {
   color: grey;
   font-size: 13px;
 }
-.course-name {
-  font-size: 16px;
-
+.canteen-name{
+  font-size: 17px;
 }
 .time-name {
   font-size: 13px;
-
 }
 </style>
