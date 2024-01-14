@@ -196,7 +196,7 @@ class _API {
     public async uploadRate(appraise: number, token: string): Promise<void> {
         try {
             await this._yearBillAPI.post('appraise', {
-                appraise
+                appraisal: appraise
             }, {
                 headers: {
                     token

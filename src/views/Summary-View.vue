@@ -36,6 +36,8 @@
             </template>
         </n-statistic>
 
+
+
         <!-- 分享 -->
         <share-modal
             base="#summary-container"
@@ -73,10 +75,7 @@
             </div>
             <n-divider />
             <div class="summary-line" style="height: 130px">
-                <img
-                    src="../assets/img/map/xiamen/building/classroom.png"
-                    style="width: 150px"
-                />
+                <img src="../assets/img/map/xiamen/building/classroom.png" style="width: 150px" />
                 <div id="classroom-data" class="summary-data">
                     <div class="data-line">
                         <span class="remark">今年你一共上了</span>
@@ -153,7 +152,6 @@
                 </div>
             </div>
         </div>
-        <div id="share-area"></div>
     </div>
 </template>
 
@@ -181,6 +179,7 @@ const isOpenModal = ref(false)
     justify-content: end;
     margin-bottom: 10px;
 }
+
 #summary-area {
     display: flex;
     flex-direction: column;
@@ -198,15 +197,5 @@ const isOpenModal = ref(false)
     }
 }
 
-// #classroom-data {
-// }
 
-#canteen-data {
-    p {
-        margin: 2px 0;
-        span {
-            color: grey;
-        }
-    }
-}
 </style>

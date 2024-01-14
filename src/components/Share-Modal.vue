@@ -3,12 +3,18 @@
     <n-modal v-model:show="isShowModal">
         <img :src="imgUrl" style="width: 75%; height: 75%" />
     </n-modal>
+    <n-qr-code
+        v-show="isHide"
+        id="qr-code"
+        value="https://annual-bill.sends.cc"
+        :size="60"
+    ></n-qr-code>
 </template>
 
 <script setup lang="ts">
-import { NButton, NModal } from 'naive-ui'
+import { NButton, NModal, NQrCode } from 'naive-ui'
 import html2canvas from 'html2canvas'
-import { ref, onMounted, nextTick, watch } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 
 const { base } = defineProps<{
     base: string //指定基于哪个元素生成Canvas
@@ -27,19 +33,18 @@ watch(isShowModal, (value) => (value ? emit('openModal') : emit('closeModal')))
 
 //分享函数
 const share = async () => {
-
     //分享时要把部分东西隐藏
     isHide.value = true
     //这里要等待vue把视图更新后再执行canvas化
     await nextTick()
 
     try {
-        //如果已经有图片了就不用重复生成了
-        if (imgUrl.value) {
-            isHide.value = false
-            isShowModal.value = true
-            return
-        }
+        //缓存: 如果已经有图片了就不用重复生成了
+        // if (imgUrl.value) {
+        //     isHide.value = false
+        //     isShowModal.value = true
+        //     return
+        // }
         //canvas化
         const canvas = await html2canvas(document.querySelector(base)!, {
             useCORS: true, //这里要允许跨域
@@ -55,11 +60,13 @@ const share = async () => {
         alert(error)
     }
 }
-//挂载后允许分享
-onMounted(() => {
-    // canBeShared.value = true
-})
 //#endregion
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+#qr-code {
+    position: absolute;
+    top: 15vh;
+    right: 20px;
+}
+</style>
