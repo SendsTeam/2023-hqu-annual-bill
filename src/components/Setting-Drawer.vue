@@ -31,18 +31,21 @@
                                 :checked="settingStore.campus === 'xiamen'"
                                 label="厦门校区"
                                 value="xiamen"
+                                :disabled="!statusStore.isSettingAvailable"
                                 @change="changeCampus"
                             />
                             <n-radio
                                 :checked="settingStore.campus === 'quanzhou'"
                                 label="泉州校区"
                                 value="quanzhou"
+                                :disabled="!statusStore.isSettingAvailable"
                                 @change="changeCampus"
                             />
                             <n-radio
                                 :checked="settingStore.campus === 'longzhouchi'"
                                 label="龙舟池校区"
                                 value="longzhouchi"
+                                :disabled="!statusStore.isSettingAvailable"
                                 @change="changeCampus"
                             />
                         </n-space>

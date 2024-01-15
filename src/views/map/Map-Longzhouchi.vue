@@ -70,7 +70,6 @@ const horizontalRate = appWidth / 400
 //#region
 //预制内联属性:注意要使用transform,性能会更好
 //TODO: 后续可以按地图路径来设计动画(多个点过渡)
-//TODO: 最好禁止在地图页切换校区
 const userMovingPositionMap = {
     //用户默认是从door开始的,也就是说door的坐标就是用户最开始的坐标
     door: {

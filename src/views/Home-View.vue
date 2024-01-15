@@ -18,7 +18,8 @@ import { useSettingStore } from '@/stores/modules/setting'
 const settingStore = useSettingStore()
 const statusStore = useStatusStore()
 
-statusStore.isSettingAvailable = true //开放设置页
+//开放设置页
+statusStore.isSettingAvailable = true 
 </script>
 
 <style scoped lang="less">
