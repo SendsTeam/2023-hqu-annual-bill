@@ -14,36 +14,50 @@
 }
 
 /* 清除默认样式 */
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-
 /* 让界面居中 */
-body{
+body {
     width: 100vw;
     height: 100vh;
-    font-family: 'lovely-bear',sans-serif;
+    font-family: 'lovely-bear', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* 移动端 */
-@media (max-width: 456px) {
-    #app {
-        width: 100%;
-        height: 100%;
+/* 移动端: #app和body等宽 */
+@media (max-width: 400px) {
+    @media (max-height: 800px) {
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    @media (min-height: 800px) {
+        #app {
+            width: 100%;
+            height: 800px;
+        }
     }
 }
 
-/* 桌面端 */
-@media (min-width: 456px) {
-    #app {
-        width: 400px;
-        height: 100%;
+/* 桌面端: 限制宽度400px */
+@media (min-width: 400px) {
+    @media (max-height: 800px) {
+        #app {
+            width: 400px;
+            height: 100%;
+        }
+    }
+    @media (min-height: 800px) {
+        #app {
+            width: 400px;
+            height: 800px;
+        }
     }
 }
-

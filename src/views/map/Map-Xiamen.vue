@@ -6,7 +6,6 @@
                 v-if="enterBuildingSignal"
                 id="map-user"
                 :style="userPosition"
-                size="medium"
                 :src="userStore.user.avatar"
             />
         </Transition>
@@ -55,29 +54,47 @@ import router from '@/router'
 const stautsStore = useStatusStore()
 const userStore = useUserStore()
 
-//用户移动动画
+//适配
+const appHeight = stautsStore.appHeight
+const appWidth = stautsStore.appWidth
+const horizontalOffset = stautsStore.appHorizontalOffset
+const verticalOffset = stautsStore.appVerticalOffset
+//比例因子
+const verticalRate = appHeight / 800
+const horizontalRate = appWidth / 400
 
+//用户移动动画
 //预制内联属性:注意要使用transform,性能会更好
-const positionMap = {
-    canteen: {
-        transform: 'translateX(80px) translateY(175px)'
-    },
-    classroom: {
-        transform: 'translateX(100px) translateY(500px)'
+const userMovingPositionMap = {
+    door: {
+        transform: `translateX(${(horizontalOffset + 320) * horizontalRate}px) translateY(${
+            (verticalOffset + 630) * verticalRate
+        }px)`
     },
     dormitory: {
-        transform: 'translateX(275px) translateY(240px)'
+        transform: `translateX(${(horizontalOffset + 300) * horizontalRate}px) translateY(${
+            (verticalOffset + 300) * verticalRate
+        }px)`
+    },
+    classroom: {
+        transform: `translateX(${(horizontalOffset + 100) * horizontalRate}px) translateY(${
+            (verticalOffset + 620) * verticalRate
+        }px)`
     },
     library: {
-        transform: 'translateX(190px) translateY(350px)'
+        transform: `translateX(${(horizontalOffset + 200) * horizontalRate}px) translateY(${
+            (verticalOffset + 420) * verticalRate
+        }px)`
     },
-    door: {
-        transform: 'translateX(310px) translateY(530px)'
+    canteen: {
+        transform: `translateX(${(horizontalOffset + 100) * horizontalRate}px) translateY(${
+            (verticalOffset + 210) * verticalRate
+        }px)`
     }
 }
 //用户头像的位置
 const userPosition = computed(() => {
-    return positionMap[stautsStore.map.current]
+    return userMovingPositionMap[stautsStore.map.current]
 })
 //控制用户头像渐变消失进入建筑物
 const enterBuildingSignal = ref(true)
@@ -135,48 +152,59 @@ onMounted(() => {
 
 <style scoped>
 #map-container {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: v-bind(appHeight + 'px');
 }
 
 #map-user {
     position: absolute;
     z-index: 1;
-    width: 30px;
-    height: 30px;
+    width: v-bind(30 * verticalRate + 'px');
+    height: v-bind(30 * verticalRate + 'px');
     transition: all 2s;
 }
+
+/* 100%灰度 */
+.gray {
+    filter: grayscale(100%);
+}
+
+/* 这里要让背景铺满整个app容器 */
 .map-background {
-    width: 100%;
-    height: 100%;
+    width: v-bind(appWidth + 'px');
+    height: v-bind(appHeight + 'px');
     position: absolute;
+}
+
+/* 教学楼 */
+.map-classroom {
+    height: v-bind(110 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 60) * horizontalRate + 'px');
+    bottom: v-bind((verticalOffset + 100) * verticalRate + 'px');
+}
+
+/* 食堂 */
+.map-canteen {
+    height: v-bind(110 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 60) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 180) * verticalRate + 'px');
+}
+
+/* 宿舍 */
+.map-dormitory {
+    height: v-bind(100 * verticalRate + 'px');
+    right: v-bind((horizontalOffset + 40) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 280) * verticalRate + 'px');
+}
+
+/* 图书馆 */
+.map-library {
+    height: v-bind(100 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 155) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 400) * verticalRate + 'px');
 }
 
 .map-building {
     position: absolute;
-}
-
-.map-classroom {
-    height: 100px;
-    left: 50px;
-    top: 485px;
-}
-
-.map-canteen {
-    height: 100px;
-    left: 60px;
-    top: 150px;
-}
-
-.map-dormitory {
-    height: 90px;
-    left: 240px;
-    top: 230px;
-}
-
-.map-library {
-    height: 80px;
-    left: 150px;
-    top: 340px;
 }
 </style>

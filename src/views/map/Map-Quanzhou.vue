@@ -65,31 +65,50 @@ import router from '@/router'
 const stautsStore = useStatusStore()
 const userStore = useUserStore()
 
+//适配
+const appHeight = stautsStore.appHeight
+const appWidth = stautsStore.appWidth
+const horizontalOffset = stautsStore.appHorizontalOffset
+const verticalOffset = stautsStore.appVerticalOffset
+//比例因子
+const verticalRate = appHeight / 800
+const horizontalRate = appWidth / 400
+
 //用户移动动画
 //#region
 //预制内联属性:注意要使用transform,性能会更好
 //TODO: 后续可以按地图路径来设计动画(多个点过渡)
 //TODO: 最好禁止在地图页切换校区
-const positionMap = {
+const userMovingPositionMap = {
     door: {
-        transform: 'translateX(260px) translateY(105px)'
+        transform: `translateX(${(horizontalOffset + 270) * horizontalRate}px) translateY(${
+            (verticalOffset + 130) * verticalRate
+        }px)`
     },
     dormitory: {
-        transform: 'translateX(90px) translateY(430px)'
+        transform: `translateX(${(horizontalOffset + 70) * horizontalRate}px) translateY(${
+            (verticalOffset + 510) * verticalRate
+        }px)`
     },
     classroom: {
-        transform: 'translateX(250px) translateY(520px)'
+        transform: `translateX(${(horizontalOffset + 250) * horizontalRate}px) translateY(${
+            (verticalOffset + 600) * verticalRate
+        }px)`
     },
     library: {
-        transform: 'translateX(250px) translateY(310px)'
+        transform: `translateX(${(horizontalOffset + 250) * horizontalRate}px) translateY(${
+            (verticalOffset + 380) * verticalRate
+        }px)`
     },
     canteen: {
-        transform: 'translateX(80px) translateY(220px)'
+        transform: `translateX(${(horizontalOffset + 80) * horizontalRate}px) translateY(${
+            (verticalOffset + 260) * verticalRate
+        }px)`
     }
 }
 //用户头像的位置
 const userPosition = computed(() => {
-    return positionMap[stautsStore.map.current]
+    return userMovingPositionMap[stautsStore.map.current]
 })
 
 //控制用户头像渐变消失进入建筑物
@@ -151,58 +170,65 @@ onMounted(() => {
 
 <style scoped>
 #map-container {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: v-bind(appHeight + 'px');
 }
 
 #map-user {
     position: absolute;
     z-index: 1;
-    width: 30px;
-    height: 30px;
+    width: v-bind(30 * verticalRate + 'px');
+    height: v-bind(30 * verticalRate + 'px');
     transition: all 2s;
 }
 
+/* 100%灰度 */
 .gray {
     filter: grayscale(100%);
 }
-.map-background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-}
 
-.map-building {
+/* 这里要让背景铺满整个app容器 */
+.map-background {
+    width: v-bind(appWidth + 'px');
+    height: v-bind(appHeight + 'px');
     position: absolute;
 }
 
 .map-door {
-    height: 140px;
-    right: 45px;
-    top: 30px;
+    height: v-bind(150 * verticalRate + 'px');
+    right: v-bind((horizontalOffset + 60) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 50) * verticalRate + 'px');
 }
 
+/* 教学楼 */
 .map-classroom {
-    height: 140px;
-    right: 55px;
-    bottom: 100px;
+    height: v-bind(150 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 210) * horizontalRate + 'px');
+    bottom: v-bind((verticalOffset + 120) * verticalRate + 'px');
 }
 
+/* 食堂 */
 .map-canteen {
-    height: 130px;
-    left: 30px;
-    top: 140px;
+    height: v-bind(150 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 35) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 170) * verticalRate + 'px');
 }
 
+/* 宿舍 */
 .map-dormitory {
-    height: 130px;
-    left: 40px;
-    bottom: 180px;
+    height: v-bind(120 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 40) * horizontalRate + 'px');
+    bottom: v-bind((verticalOffset + 220) * verticalRate + 'px');
 }
 
+/* 图书馆 */
 .map-library {
-    height: 150px;
-    left: 175px;
-    top: 230px;
+    height: v-bind(160 * verticalRate + 'px');
+    left: v-bind((horizontalOffset + 190) * horizontalRate + 'px');
+    top: v-bind((verticalOffset + 300) * verticalRate + 'px');
+}
+
+.map-building {
+    position: absolute;
 }
 </style>

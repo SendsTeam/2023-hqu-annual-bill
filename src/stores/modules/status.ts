@@ -15,6 +15,10 @@ export const useStatusStore = defineStore('StatusStore', {
                 library: false
             }
         },
+        appWidth: document.querySelector('#app')!.clientWidth,
+        appHorizontalOffset: (window.innerWidth - document.querySelector('#app')!.clientWidth) / 2,
+        appHeight: document.querySelector('#app')!.clientHeight,
+        appVerticalOffset: (window.innerHeight - document.querySelector('#app')!.clientHeight) / 2,
         globalPaused: false, //全局暂停
         isPC: false,
         isReady: false,

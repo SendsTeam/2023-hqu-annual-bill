@@ -15,6 +15,7 @@
 import { NButton, NModal, NQrCode } from 'naive-ui'
 import html2canvas from 'html2canvas'
 import { ref, nextTick, watch } from 'vue'
+import { useStatusStore } from '../stores/modules/status'
 
 const { base } = defineProps<{
     base: string //指定基于哪个元素生成Canvas
@@ -61,12 +62,14 @@ const share = async () => {
     }
 }
 //#endregion
+
+const offset = useStatusStore().appHorizontalOffset * 2
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 #qr-code {
     position: absolute;
-    top: 15vh;
-    right: 20px;
+    right: v-bind(offset + 'px');
+    top: 100px;
 }
 </style>
