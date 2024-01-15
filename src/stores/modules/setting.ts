@@ -14,6 +14,24 @@ export const useSettingStore = defineStore('SettingStore', {
             //快速展示
             quickPlay: false
         },
-        egg: false
-    })
+        //是否开启彩蛋
+        egg: false,
+    }),
+    actions: {
+        //更新本地存储
+        updateLocal() {
+            localStorage.setItem('setting', JSON.stringify(this.$state))
+        },
+        //读取并且装载本地存储
+        loadLocal(): I_SettingStoreState | null {
+            const setting = localStorage.getItem('setting')
+            if (setting) {
+                this.$state = JSON.parse(setting)
+                return this.$state
+            } else {
+                return null
+            }
+        }
+    }
 })
+

@@ -22,7 +22,7 @@
 
 /* 让界面居中 */
 body{
-    /* width: 100vw; */
+    width: 100vw;
     height: 100vh;
     font-family: 'lovely-bear',sans-serif;
     display: flex;

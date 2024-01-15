@@ -20,19 +20,13 @@ statusStore.isPC = IsPC()
 const userStore = useUserStore()
 userStore.user.code = getCodeByRedirect()
 
-//TODO: 检查本地存储,看看是否配置过,如果没有先指向配置页
+//检查本地存储,看看是否配置过,如果没有则指向配置页
 //#region
-//如果存在配置信息,则按上次配置信息来
 const settingStore = useSettingStore()
-const setting = localStorage.getItem('setting')
-statusStore.hasConfigured = setting ? true : false
-
-if (setting) {
-    //装载本地配置
-    settingStore.$state = JSON.parse(setting)
+if (settingStore.loadLocal()) {
+    statusStore.hasConfigured = true
     router.replace({ name: 'loading' })
 } else {
-    //跳转到配置页
     router.replace({ name: 'configure' })
 }
 //#endregion

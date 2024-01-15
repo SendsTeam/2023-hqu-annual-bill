@@ -1,5 +1,6 @@
 <template>
     <div id="summary-container">
+        <!-- 用户信息 -->
         <div id="user-info">
             <!-- 图标 -->
             <n-space>
@@ -7,7 +8,7 @@
                 <GithubIcon />
             </n-space>
 
-            <!-- 用户信息 -->
+            <!-- 用户名及其头像 -->
             <div style="flex: 1"></div>
             <n-space>
                 <h2>Hi!</h2>
@@ -18,6 +19,7 @@
             </n-space>
         </div>
 
+        <!-- 统计 -->
         <n-statistic label="截止目前已有" tabular-nums>
             <!-- 这里到时候少一位,然后setTimeOut +1 -->
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.total" />
@@ -36,8 +38,6 @@
             </template>
         </n-statistic>
 
-
-
         <!-- 分享 -->
         <share-modal
             base="#summary-container"
@@ -47,6 +47,7 @@
 
         <n-divider />
 
+        <!-- 总结区域 -->
         <div id="summary-area">
             <div class="summary-line">
                 <img src="../assets/img/map/xiamen/building/library.png" style="height: 75px" />
@@ -196,6 +197,4 @@ const isOpenModal = ref(false)
         }
     }
 }
-
-
 </style>

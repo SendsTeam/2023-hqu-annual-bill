@@ -1,9 +1,8 @@
 <template>
     <div
         id="home-container"
-        ref="containerRef"
         :class="settingStore.campus === 'longzhouchi' ? 'xiamen' : settingStore.campus"
-        @click="next"
+        @click="router.push({ name: 'map' })"
     >
         <fade-transition id="tip">点击任意处继续!</fade-transition>
     </div>
@@ -19,17 +18,12 @@ import { useSettingStore } from '@/stores/modules/setting'
 const settingStore = useSettingStore()
 const statusStore = useStatusStore()
 
-//next事件
-const next = () => {
-    router.push({ name: 'map' })
-}
-
 statusStore.isSettingAvailable = true //开放设置页
 </script>
 
 <style scoped lang="less">
 #home-container {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     #tip {
         position: absolute;
@@ -45,15 +39,6 @@ statusStore.isSettingAvailable = true //开放设置页
     }
 }
 
-img {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
 .xiamen {
     background-image: url('../assets/img/home/home-xiamen.jpg');
     background-size: cover;
