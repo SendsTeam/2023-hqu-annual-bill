@@ -68,8 +68,8 @@ router.afterEach(async (to) => {
     if (to.fullPath === '/loading' || to.query['code']) {
         return
     }
-
-    let authUrl = window.location.href
+    console.log(to)
+    let authUrl = window.location.host
     if (statusStore.client === 'IOS') {
         authUrl = statusStore.iosInitialUrl
     }
