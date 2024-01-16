@@ -4,8 +4,8 @@ import { useUserStore } from '@/stores/modules/user'
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
-    // history: createWebHashHistory(),
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
+    // history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
@@ -64,18 +64,18 @@ const router = createRouter({
 const statusStore = useStatusStore(pinia)
 const userStore = useUserStore(pinia)
 
-router.afterEach(async (to) => {
-    //获取code和loading阶段不需要鉴权
-    if (to.fullPath === '/loading' || to.query['code']) {
-        return
-    }
-    // let authUrl = window.location.href.split('#')[0]
-    // if (statusStore.client === 'IOS') {
-    //     authUrl = statusStore.iosInitialUrl
-    // }
-    // console.log('AuthUrl:', authUrl)
-    await userStore.initWxSDK(window.location.href.split('#')[0])
-})
+// router.afterEach(async (to) => {
+//     //获取code和loading阶段不需要鉴权
+//     if (to.fullPath === '/loading' || to.query['code']) {
+//         return
+//     }
+//     // let authUrl = window.location.href.split('#')[0]
+//     // if (statusStore.client === 'IOS') {
+//     //     authUrl = statusStore.iosInitialUrl
+//     // }
+//     // console.log('AuthUrl:', authUrl)
+//     await userStore.initWxSDK(window.location.href.split('#')[0])
+// })
 
 //开发者通道
 Object.defineProperty(window, '__wxSDK', {

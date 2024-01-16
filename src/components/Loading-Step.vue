@@ -3,6 +3,7 @@
     <n-steps vertical :current="current as number" :status="currentStatus">
         <n-step title="登陆" description="" />
         <n-step title="初始化数据" :description="status" />
+        <n-step title="初始化微信SDK" description="" />
         <n-step title="获取流水数据" description="" />
     </n-steps>
 </template>
@@ -23,7 +24,7 @@ const emit = defineEmits<{
 }>()
 //初始化状态量
 const current = ref(1)
-const maxStep = 3
+const maxStep = 4
 const currentStatus = ref<StepsProps['status']>('process')
 
 //Promise链
@@ -40,6 +41,10 @@ userStore
         alert(msg)
         //刷新
         window.location.reload()
+    })
+    .then(async () => {
+        current.value++
+        await userStore.initWxSDK(window.location.href.split('#')[0])
     })
     .then(async () => {
         current.value++
