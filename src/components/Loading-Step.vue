@@ -41,16 +41,6 @@ userStore
         //刷新
         window.location.reload()
     })
-    // .then(async () => {
-    //     current.value++
-    //     //TODO 需要拿到正确的url
-    //     let url = window.location.href
-    //     if (statusStore.client === 'IOS') {
-    //         url = statusStore.iosInitialUrl
-    //     }
-    //     console.log('rightUrl:', url)
-    //     await userStore.initWxSDK(url)
-    // })
     .then(async () => {
         current.value++
         await userStore.getStatistics()

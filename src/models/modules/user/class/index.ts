@@ -5,7 +5,6 @@ import type {
     I_RankStatistic
 } from '../../bill/interface/index'
 import type { Ref } from 'vue'
-import type { I_WxSignature } from '../../wx/interface/index'
 import wx from 'weixin-js-sdk'
 
 //models实现层
