@@ -62,14 +62,15 @@ const share = async () => {
     }
 }
 //#endregion
+const statusStore = useStatusStore()
+const horizontalOffset = statusStore.appHorizontalOffset * 2
 
-const offset = useStatusStore().appHorizontalOffset * 2
 </script>
 
 <style scoped>
 #qr-code {
     position: absolute;
-    right: v-bind(offset + 'px');
-    top: 100px;
+    right: v-bind(horizontalOffset + 15 + 'px');
+    top: 125px;
 }
 </style>

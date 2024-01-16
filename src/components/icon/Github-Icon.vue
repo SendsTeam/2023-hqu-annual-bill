@@ -1,5 +1,5 @@
 <template>
-    <a href="https://github.com/">
+    <a href="https://github.com/SendsTeam/2023-hqu-annual-bill">
         <svg
             t="1702546155352"
             class="icon"

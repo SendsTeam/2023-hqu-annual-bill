@@ -212,4 +212,4 @@ class _API {
     }
 }
 
-export const API = new _API()
+export const API = Object.freeze(new _API())

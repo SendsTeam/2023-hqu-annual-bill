@@ -19,8 +19,6 @@ statusStore.client = judgeClient()
 //获取Code
 const userStore = useUserStore()
 userStore.user.code = getCodeByRedirect()
-//记录ios端的初始url
-statusStore.iosInitialUrl = window.location.href
 
 //检查本地存储,看看是否配置过,如果没有则指向配置页
 //#region

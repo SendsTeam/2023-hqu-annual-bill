@@ -41,7 +41,7 @@ export class User {
             const { appId, timestamp, nonceStr, signature } = signatureData
             //拿到签名后开始配置
             wx.config({
-                debug: true, //开启调试模式
+                debug: false, //开启调试模式
                 appId, //!公众号标识
                 timestamp, //!生成签名的时间戳
                 nonceStr, //!生成签名的随机字符串
@@ -49,37 +49,32 @@ export class User {
                 //!配置需要用到哪些wx客户端的api
                 jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
             })
-            //配置API
+            //分享配置
+            const wxShareConfig = {
+                title: '2023年度账单',
+                link: window.location.origin,
+                desc: 'Hi! 快来领取你的2023年度账单吧!',
+                imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
+                success() {
+                    console.log('share success')
+                },
+                fail() {
+                    //静默失败
+                    console.log('share fail')
+                },
+                cancel() {
+                    console.log('share cancel')
+                },
+                complete() {
+                    console.log('share compelete')
+                }
+            }
             wx.ready(() => {
-                wx.onMenuShareTimeline({
-                    title: '年度账单',
-                    link: window.location.origin,
-                    imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() {
-                        console.log('success')
-                    },
-                    fail() {
-                        console.log('fail')
-                    },
-                    cancel() {
-                        console.log('cancel')
-                    }
-                })
-                wx.onMenuShareAppMessage({
-                    title: '年度账单',
-                    desc: '快来领取你的2023年度账单吧!',
-                    link: window.location.origin,
-                    imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() {
-                        console.log('success')
-                    },
-                    fail() {
-                        console.log('fail')
-                    },
-                    cancel() {
-                        console.log('cancel')
-                    }
-                })
+                wx.onMenuShareTimeline(wxShareConfig)
+                wx.onMenuShareAppMessage(wxShareConfig)
+                wx.onMenuShareQQ(wxShareConfig)
+                wx.onMenuShareWeibo(wxShareConfig)
+                wx.onMenuShareQZone(wxShareConfig)
             })
         }
     }

@@ -40,7 +40,7 @@ userStore
         //提示用户重新进入界面!
         alert(msg)
         //刷新
-        window.location.reload()
+        window.location.href = window.location.origin
     })
     .then(async () => {
         current.value++

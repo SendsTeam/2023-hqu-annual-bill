@@ -20,7 +20,6 @@ export const useStatusStore = defineStore('StatusStore', {
         appVerticalOffset: (window.innerHeight - document.querySelector('#app')!.clientHeight) / 2,
         globalPaused: false, //全局暂停
         client: '' as 'PC' | 'Android' | 'IOS',
-        iosInitialUrl: '', //针对ios,记录含有code的初始url用于鉴权
         isReady: false,
         isSettingAvailable: false
     })
