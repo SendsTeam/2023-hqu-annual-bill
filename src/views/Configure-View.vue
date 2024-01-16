@@ -142,8 +142,9 @@ import {
 } from 'naive-ui'
 import { computed, ref } from 'vue'
 
-//获取settingStore,让这里的配置直接同步Store!
+//StoreGetting... 让这里的配置直接同步Store!
 const settingStore = useSettingStore()
+
 //校区
 //#region
 //改变选项的callback

@@ -15,9 +15,12 @@
                     <h2 id="drawer-header">
                         <div style="display: flex">
                             <span>配置</span>
-                            <div style="flex: 1; display: flex; flex-direction: row-reverse">
-                                {{ batteryStatus }}
-                            </div>
+                            <!-- 电量彩蛋 -->
+                            <div
+                                v-show="isEgg"
+                                v-text="batteryStatus"
+                                style="flex: 1; display: flex; flex-direction: row-reverse"
+                            ></div>
                         </div>
                         <p id="tip" v-show="tip" v-text="tip"></p>
                     </h2>
@@ -101,7 +104,19 @@
                         </n-space>
                     </n-thing>
                 </n-list-item>
-                <!-- 如何评价xxx -->
+                <!-- 彩蛋 -->
+                <n-list-item>
+                    <n-thing>
+                        <template #header>4. 彩蛋</template>
+                        <n-space vertical>
+                            <n-switch :round="false" v-model:value="settingStore.egg">
+                                <template #checked> 玩的开心🥳 </template>
+                                <template #unchecked> 原汁原味 </template>
+                            </n-switch>
+                        </n-space>
+                    </n-thing>
+                </n-list-item>
+                <!-- 评价 -->
                 <n-list-item>
                     <n-thing>
                         <template #header> 4. 如何评价本次活动</template>
@@ -155,6 +170,7 @@ import { useSettingStore } from '@/stores/modules/setting'
 import { computed, onUnmounted, ref, watch } from 'vue'
 import { useAudioStore } from '@/stores/modules/audio'
 import { useUserStore } from '../stores/modules/user'
+import { storeToRefs } from 'pinia'
 
 const { drawerStatus } = defineProps<{
     drawerStatus: {
@@ -212,8 +228,13 @@ const showTip = (content: string, delay: number = 2000) => {
 
 //电量彩蛋
 //#region
+const { egg: isEgg } = storeToRefs(settingStore)
 const battery = ref(100)
 let batteryIntervalId = setInterval(() => {
+    //没开彩蛋不用管
+    if (!isEgg.value) {
+        return
+    }
     if (battery.value) {
         battery.value--
     } else {

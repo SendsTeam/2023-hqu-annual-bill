@@ -36,14 +36,13 @@ export class User {
     }
     //初始化微信客户端API
     public async initWxSDK() {
-        const rightUrl = `http://192.168.31.168/?code=${this.code}`
+        const rightUrl = window.location.href.split('#')[0]
         const signatureData = await API.getSignature(rightUrl)
         if (signatureData) {
-            // alert(rightUrl)
             const { appId, timestamp, nonceStr, signature } = signatureData
             //拿到签名后开始配置
             wx.config({
-                debug: false, //开启调试模式
+                debug: true, //开启调试模式
                 appId, //!公众号标识
                 timestamp, //!生成签名的时间戳
                 nonceStr, //!生成签名的随机字符串
@@ -57,16 +56,30 @@ export class User {
                     title: '年度账单',
                     link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() { },
-                    cancel() { }
+                    success() {
+                        console.log('success')
+                    },
+                    fail() {
+                        console.log('fail')
+                    },
+                    cancel() {
+                        console.log('cancel')
+                    }
                 })
                 wx.onMenuShareAppMessage({
                     title: '年度账单',
                     desc: '快来领取你的2023年度账单吧!',
                     link: rightUrl,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
-                    success() { },
-                    cancel() { }
+                    success() {
+                        console.log('success')
+                    },
+                    fail() {
+                        console.log('fail')
+                    },
+                    cancel() {
+                        console.log('cancel')
+                    }
                 })
             })
         }
