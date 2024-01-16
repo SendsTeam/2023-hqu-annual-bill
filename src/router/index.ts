@@ -4,8 +4,8 @@ import { useUserStore } from '@/stores/modules/user'
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
-    // history: createWebHashHistory(import.meta.env.BASE_URL),
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
+    // history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
@@ -69,12 +69,19 @@ router.afterEach(async (to) => {
         return
     }
     console.log(to)
-    let authUrl = window.location.host
+    let authUrl = window.location.href.split('#')[0]
     if (statusStore.client === 'IOS') {
         authUrl = statusStore.iosInitialUrl
     }
     console.log('AuthUrl:', authUrl)
     await userStore.initWxSDK(authUrl)
+})
+
+//开发者通道
+Object.defineProperty(window, '__wxSDK', {
+    value: (url: string) => {
+        userStore.initWxSDK(url)
+    }
 })
 
 export default router
