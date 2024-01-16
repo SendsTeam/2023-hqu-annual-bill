@@ -53,7 +53,7 @@ export class User {
             wx.ready(() => {
                 wx.onMenuShareTimeline({
                     title: '年度账单',
-                    link: url,
+                    link: window.location.origin,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {
                         console.log('success')
@@ -68,7 +68,7 @@ export class User {
                 wx.onMenuShareAppMessage({
                     title: '年度账单',
                     desc: '快来领取你的2023年度账单吧!',
-                    link: url,
+                    link: window.location.origin,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {
                         console.log('success')
