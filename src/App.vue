@@ -4,7 +4,7 @@ import TouchListener from './components/Touch-Listener.vue'
 import AudioPlayer from './components/Audio-Player.vue'
 import router from '@/router'
 import { useStatusStore } from './stores/modules/status'
-import { IsPC } from '@/util/index'
+import { judgeClient } from '@/util/index'
 import { NMessageProvider } from 'naive-ui'
 import { useSettingStore } from '@/stores/modules/setting'
 import { getCodeByRedirect } from './util/index'
@@ -12,13 +12,15 @@ import { useUserStore } from '@/stores/modules/user'
 import { reactive } from 'vue'
 import type { Placement } from 'naive-ui/es/drawer/src/DrawerBodyWrapper'
 
-//判断桌面端还是移动端
+//判断客户端
 const statusStore = useStatusStore()
-statusStore.isPC = IsPC()
+statusStore.client = judgeClient()
 
 //获取Code
 const userStore = useUserStore()
 userStore.user.code = getCodeByRedirect()
+//记录ios端的初始url
+statusStore.iosInitialUrl = window.location.href
 
 //检查本地存储,看看是否配置过,如果没有则指向配置页
 //#region

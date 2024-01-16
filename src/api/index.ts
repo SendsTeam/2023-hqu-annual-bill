@@ -170,7 +170,7 @@ class _API {
         }
     }
     //获取微信签名
-    public async getSignature(url: string = 'annual-bill.sends.cc'): Promise<I_WxSignature | null> {
+    public async getSignature(url: string): Promise<I_WxSignature | null> {
         try {
             const { data } = await this._userAPI.post('jssdk', {
                 url

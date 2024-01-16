@@ -1,15 +1,15 @@
-//判断是移动端还是手机端
-export function IsPC() {
-    const userAgentInfo = navigator.userAgent
-    const Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
-    let flag = true
-    for (let v = 0; v < Agents.length; v++) {
-        if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            flag = false
-            break
-        }
+
+//判断客户端
+export function judgeClient(): 'PC' | 'Android' | 'IOS' {
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        //判断iPhone|iPad|iPod|iOS
+        return 'IOS'
+    } else if (/(Android)/i.test(navigator.userAgent)) {
+        //判断Android
+        return 'Android'
+    } else {
+        return 'PC'
     }
-    return flag
 }
 
 //根据时间戳获取格式化时间

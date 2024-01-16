@@ -1,8 +1,7 @@
-import type { I_StatusStoreState } from '@/models/modules/store/status/interface'
 import { defineStore } from 'pinia'
 
 export const useStatusStore = defineStore('StatusStore', {
-    state: (): I_StatusStoreState => ({
+    state: () => ({
         hasConfigured: false,
         map: {
             //一开始都是从大门进入
@@ -20,7 +19,8 @@ export const useStatusStore = defineStore('StatusStore', {
         appHeight: document.querySelector('#app')!.clientHeight,
         appVerticalOffset: (window.innerHeight - document.querySelector('#app')!.clientHeight) / 2,
         globalPaused: false, //全局暂停
-        isPC: false,
+        client: '' as 'PC' | 'Android' | 'IOS',
+        iosInitialUrl: '', //针对ios,记录含有code的初始url用于鉴权
         isReady: false,
         isSettingAvailable: false
     })

@@ -9,6 +9,7 @@ export const useUserStore = defineStore('UserStore', {
         user: new User()
     }),
     actions: {
+        //登陆
         async login() {
             await this.user.login()
         },
@@ -24,12 +25,11 @@ export const useUserStore = defineStore('UserStore', {
             await this.user.getRank()
         },
         //初始化微信相关
-        async initWxSDK() {
-            await this.user.initWxSDK()
+        async initWxSDK(url: string) {
+            await this.user.initWxSDK(url)
         },
         async uploadRate(appraise: number) {
             await this.user.uploadRate(appraise)
         }
-
     }
 })

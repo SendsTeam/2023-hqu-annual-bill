@@ -7,6 +7,7 @@ import type {
 import type { Ref } from 'vue'
 import type { I_WxSignature } from '../../wx/interface/index'
 import wx from 'weixin-js-sdk'
+
 //models实现层
 export class User {
     public learningStatistic: I_LearningStatistic | null = null
@@ -35,9 +36,8 @@ export class User {
         await API.initUser(this.token, status)
     }
     //初始化微信客户端API
-    public async initWxSDK() {
-        const rightUrl = window.location.href.split('#')[0]
-        const signatureData = await API.getSignature(rightUrl)
+    public async initWxSDK(url: string) {
+        const signatureData = await API.getSignature(url)
         if (signatureData) {
             const { appId, timestamp, nonceStr, signature } = signatureData
             //拿到签名后开始配置
@@ -54,7 +54,7 @@ export class User {
             wx.ready(() => {
                 wx.onMenuShareTimeline({
                     title: '年度账单',
-                    link: rightUrl,
+                    link: url,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {
                         console.log('success')
@@ -69,7 +69,7 @@ export class User {
                 wx.onMenuShareAppMessage({
                     title: '年度账单',
                     desc: '快来领取你的2023年度账单吧!',
-                    link: rightUrl,
+                    link: url,
                     imgUrl: 'https://git.sends.cc/uploads/-/system/appearance/favicon/1/favicon.ico',
                     success() {
                         console.log('success')

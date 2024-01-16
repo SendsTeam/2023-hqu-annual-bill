@@ -3,7 +3,6 @@
     <n-steps vertical :current="current as number" :status="currentStatus">
         <n-step title="登陆" description="" />
         <n-step title="初始化数据" :description="status" />
-        <n-step title="初始化微信SDK" description="" />
         <n-step title="获取流水数据" description="" />
     </n-steps>
 </template>
@@ -16,6 +15,7 @@ import { useStatusStore } from '@/stores/modules/status'
 
 //Store getting...
 const userStore = useUserStore()
+const statusStore = useStatusStore()
 
 //事件声明
 const emit = defineEmits<{
@@ -23,7 +23,7 @@ const emit = defineEmits<{
 }>()
 //初始化状态量
 const current = ref(1)
-const maxStep = 4
+const maxStep = 3
 const currentStatus = ref<StepsProps['status']>('process')
 
 //Promise链
@@ -41,10 +41,16 @@ userStore
         //刷新
         window.location.reload()
     })
-    .then(async () => {
-        current.value++
-        await userStore.initWxSDK()
-    })
+    // .then(async () => {
+    //     current.value++
+    //     //TODO 需要拿到正确的url
+    //     let url = window.location.href
+    //     if (statusStore.client === 'IOS') {
+    //         url = statusStore.iosInitialUrl
+    //     }
+    //     console.log('rightUrl:', url)
+    //     await userStore.initWxSDK(url)
+    // })
     .then(async () => {
         current.value++
         await userStore.getStatistics()
@@ -54,7 +60,6 @@ userStore
     })
 
 //进度完成后触发
-const statusStore = useStatusStore()
 watch(current, () => {
     if (current.value > maxStep) {
         //通知状态仓库已经完成全部准备

@@ -1,6 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import pinia from '@/stores'
+import { useStatusStore } from '@/stores/modules/status'
+import { useUserStore } from '@/stores/modules/user'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
+    // history: createWebHashHistory(import.meta.env.BASE_URL),
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
@@ -54,6 +58,23 @@ const router = createRouter({
             component: () => import('../views/Summary-View.vue')
         }
     ]
+})
+
+//全局路由守卫,进入新路由后重新鉴权
+const statusStore = useStatusStore(pinia)
+const userStore = useUserStore(pinia)
+router.afterEach(async (to) => {
+    //获取code和loading阶段不需要鉴权
+    if (to.fullPath === '/loading' || to.query['code']) {
+        return
+    }
+
+    let authUrl = window.location.href
+    if (statusStore.client === 'IOS') {
+        authUrl = statusStore.iosInitialUrl
+    }
+    console.log('AuthUrl:', authUrl)
+    await userStore.initWxSDK(authUrl)
 })
 
 export default router
