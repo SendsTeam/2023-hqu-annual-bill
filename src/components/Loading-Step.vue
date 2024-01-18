@@ -38,9 +38,14 @@ userStore
     })
     .catch((msg: string) => {
         //提示用户重新进入界面!
-        alert(msg)
-        //刷新
-        window.location.href = window.location.origin
+        if (msg === '未绑定,请前往绑定') {
+            window.location.href = 'wx.sends.cc'
+            return
+        } else {
+            alert(msg)
+            //刷新
+            window.location.href = window.location.origin
+        }
     })
     .then(async () => {
         current.value++

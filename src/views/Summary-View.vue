@@ -24,7 +24,7 @@
             <!-- 这里到时候少一位,然后setTimeOut +1 -->
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.total" />
             <template #suffix>
-                <span>位hquer解锁年度账单!</span>
+                <span>位HQUers解锁年度账单!</span>
             </template>
         </n-statistic>
 
@@ -34,7 +34,7 @@
             </template>
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.index" />
             <template #suffix>
-                <span>名✨</span>
+                <span>位幸运儿✨</span>
             </template>
         </n-statistic>
 

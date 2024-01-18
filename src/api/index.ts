@@ -45,31 +45,29 @@ class _API {
     // 初始化之后要在本地存储标识!
     public initUser(token: string, status: Ref<string>): Promise<string> {
         return new Promise((resolve, reject) => {
-            // !缓存 已弃用,不建议开启!!!
-            // if (localStorage.getItem('isInitialized')) {
-            //     status.value = '数据已初始化'
-            //     resolve('数据已初始化')
-            // } else {
             try {
-                //开启ws
                 const ws = new WebSocket('wss://api.sends.cc/yearBill/init', token)
-
                 ws.onmessage = (evt) => {
                     //注意ws传的是字符串JSON,要解析成JS对象
                     const data = JSON.parse(evt.data)
                     //更新状态
                     status.value = data.msg
-                    if (data.code == 1000) {
-                        //初始化成功
-                        // localStorage.setItem('isInitialized', 'true')
-                        resolve(data.msg)
-                    } else if (data.code == 1001) {
-                        //!爆满,交给调用链catch进行重进界面处理
-                        reject(data.msg)
+                    switch (data.code) {
+                        case 1000:
+                            //初始化成功
+                            resolve(data.msg)
+                            break
+                        case 1001:
+                            //!爆满,交给调用链catch进行重进界面处理
+                            reject(data.msg)
+                            break
+                        case 1005:
+                            reject('未绑定,请前往绑定')
+                            break
                     }
                 }
             } catch (error) {
-                alert(`初始化用户失败! ${error}`)
+                alert(`初始化用户失败!`)
                 reject(error)
             }
         })
@@ -106,11 +104,11 @@ class _API {
                 }
                 return paymentStatistic
             } else {
-                alert(`获取支付流水数据失败! ${data.msg}`)
+                alert(`获取支付流水数据失败,请重试`)
                 return null
             }
         } catch (error) {
-            alert(`获取支付流水数据失败! ${error}`)
+            alert(`获取支付流水数据失败!,请重试`)
             return null
         }
     }
@@ -137,11 +135,11 @@ class _API {
                 }
                 return learningStatistic
             } else {
-                alert(`获取学习数据失败! ${data.msg}`)
+                alert(`获取学习数据失败!,请重试`)
                 return null
             }
         } catch (error) {
-            alert(`获取学习数据失败! ${error}`)
+            alert(`获取学习数据失败!,请重试`)
             return null
         }
     }
@@ -161,11 +159,11 @@ class _API {
                 }
                 return rankStatistic
             } else {
-                alert(`获取排名数据失败! ${data.msg}`)
+                alert(`获取排名数据失败!,请重试`)
                 return null
             }
         } catch (error) {
-            alert(`获取排名数据失败! ${error}`)
+            alert(`获取排名数据失败!,请重试`)
             return null
         }
     }
@@ -184,11 +182,11 @@ class _API {
                     signature: origin.signature
                 }
             } else {
-                alert(`获取微信签名失败! ${data.msg}`)
+                alert(`获取微信签名失败!,请重试`)
                 return null
             }
         } catch (error) {
-            alert(`获取微信签名失败! ${error}`)
+            alert(`获取微信签名失败!,请重试`)
             return null
         }
     }
