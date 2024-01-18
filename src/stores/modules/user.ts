@@ -10,8 +10,8 @@ export const useUserStore = defineStore('UserStore', {
     }),
     actions: {
         //登陆
-        async login() {
-            await this.user.login()
+        async login(): Promise<boolean> {
+            return await this.user.login()
         },
         //!初始化数据,不调这个拿不到数据!
         async init(status: Ref<string>) {

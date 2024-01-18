@@ -22,23 +22,17 @@ class _API {
         avatar: string
         nickName: string
     } | null> {
-        try {
-            const { data } = await this._userAPI.post('bill_login', {
-                code
-            })
-            if (data.code === 1000) {
-                return {
-                    token: data.data.token,
-                    avatar: data.data.avatar,
-                    nickName: data.data.nick_name
-                }
-            } else {
-                alert(`登陆失败! ${data.msg}`)
-                return null
+        const { data } = await this._userAPI.post('bill_login', {
+            code
+        })
+        if (data.code === 1000) {
+            return {
+                token: data.data.token,
+                avatar: data.data.avatar,
+                nickName: data.data.nick_name
             }
-        } catch (error) {
-            alert(`登陆失败! ${error}`)
-            return null
+        } else {
+            throw '登陆失败,请绑定桑梓微助手!'
         }
     }
     //!初始化用户数据 必须要初始化之后才能拿到数据

@@ -30,36 +30,34 @@ const currentStatus = ref<StepsProps['status']>('process')
 //Promise链
 //映射初始化ws进度
 const status = ref('流量较大,会稍微久点🕘')
+const success = ref(false)
 userStore
     .login()
-    .catch(() => {
-        alert('登陆失败,请前往绑定')
-        window.location.href = 'wx.sends.cc'
-    })
-    .then(async () => {
+    .then(async (isLogin) => {
+        success.value = isLogin
+        if (!isLogin) return
+
         current.value++
         await userStore.init(status)
     })
     .catch((msg: string) => {
         //提示用户重新进入界面!
-        if (msg === '未绑定,请前往绑定') {
-            window.location.href = 'wx.sends.cc'
-            return
-        } else {
-            alert(msg)
-            //刷新
-            window.location.href = window.location.origin
-        }
+        alert(msg)
+        //刷新
+        window.location.href = window.location.origin
     })
     .then(async () => {
+        if (!success.value) return
         current.value++
         await userStore.initWxSDK(window.location.href.split('#')[0])
     })
     .then(async () => {
+        if (!success.value) return
         current.value++
         await userStore.getStatistics()
     })
     .then(() => {
+        if (!success.value) return
         current.value++
     })
 
