@@ -32,6 +32,10 @@ const currentStatus = ref<StepsProps['status']>('process')
 const status = ref('流量较大,会稍微久点🕘')
 userStore
     .login()
+    .catch(() => {
+        alert('登陆失败,请前往绑定')
+        window.location.href = 'wx.sends.cc'
+    })
     .then(async () => {
         current.value++
         await userStore.init(status)
