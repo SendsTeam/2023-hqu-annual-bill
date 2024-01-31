@@ -21,7 +21,6 @@
 
         <!-- 统计 -->
         <n-statistic label="截止目前已有" tabular-nums>
-            <!-- 这里到时候少一位,然后setTimeOut +1 -->
             <n-number-animation :from="0" :to="userStore.user.rankStatistic?.total" />
             <template #suffix>
                 <span>位HQUers解锁年度账单!</span>
