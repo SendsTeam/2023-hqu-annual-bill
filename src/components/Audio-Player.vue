@@ -1,6 +1,6 @@
 <template>
     <!-- 不显示 -->
-    <span style="display: none"></span>
+    <audio style="display: none"></audio>
 </template>
 <script setup lang="ts">
 //TODO 这里也许可以抽象到Store中

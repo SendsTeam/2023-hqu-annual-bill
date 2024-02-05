@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 
-
 export const useAudioStore = defineStore('AudioStore', () => {
     const baseUrl = './audio/'
     const audio = new Audio(baseUrl + 'default.mp3')
@@ -27,13 +26,9 @@ export const useAudioStore = defineStore('AudioStore', () => {
     }
 
     //播放音乐
-    async function play() {
-        try {
-            paused.value = false
-            await audio.play()
-        } catch (error) {
-            alert(error)
-        }
+    function play() {
+        paused.value = false
+        audio.play().then(() => {})
     }
 
     //暂停
@@ -72,6 +67,3 @@ export const useAudioStore = defineStore('AudioStore', () => {
         lastAudio
     }
 })
-
-
-
