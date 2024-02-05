@@ -49,6 +49,8 @@ flushcache:
   stage: flushcache
   image: python:alpine
   script:
-    - cd python-flushcache
-    - python -m pip install -r requirements.txt
-    - python main.py
+    - if [ "$CI_ENVIRONMENT_NAME" == "production" ]; then 
+      cd python-flushcache && python -m pip install -r requirements.txt && python main.py;
+      else
+      sleep 1;
+      fi
