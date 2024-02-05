@@ -1,6 +1,8 @@
-id="hide"
-key="hide"
 import json
+import os
+env_dist = os.environ
+id=env_dist['SECRETID']
+key=env_dist['SECRETKEY']
 from tencentcloud.common import credential
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
