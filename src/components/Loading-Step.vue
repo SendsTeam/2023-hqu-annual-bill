@@ -2,7 +2,7 @@
 <template>
     <n-steps vertical :current="current as number" :status="currentStatus">
         <n-step title="登录" description="" />
-        <n-step title="初始化数据(当前仅支持加载学生数据)" :description="status" />
+        <n-step title="初始化数据(仅支持学生)" :description="status" />
         <n-step title="初始化微信SDK" description="" />
         <n-step title="获取流水数据" description="" />
     </n-steps>
