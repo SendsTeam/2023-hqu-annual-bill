@@ -3,7 +3,7 @@ default:
 stages:
   - build
   - deploy
-# - flushcache
+  - flushcache
 
 cache:
   paths:
@@ -44,11 +44,11 @@ deploy:
       ssh -p 4242 ubuntu@hidden bash /home/ubuntu/2023_annual_statement/runfrontedpre.sh;
       fi
 
-
-# flushcache:
-#   stage: flushcache
-#   image: python:alpine
-#   script:
-#     - cd python-flushcache
-#     - python -m pip install -r requirements.txt
-#     - python main.py
+# Flush CDN
+flushcache:
+  stage: flushcache
+  image: python:alpine
+  script:
+    - cd python-flushcache
+    - python -m pip install -r requirements.txt
+    - python main.py
