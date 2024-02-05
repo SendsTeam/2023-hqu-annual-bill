@@ -3,7 +3,7 @@ default:
 stages:
   - build
   - deploy
-# - flushcache
+  - flushcache
 
 cache:
   paths:
