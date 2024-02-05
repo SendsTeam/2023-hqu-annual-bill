@@ -1,3 +1,4 @@
+id="hide"
 key="hide"
 import json
 from tencentcloud.common import credential
