@@ -16,7 +16,7 @@ class _API {
     private _yearBillAPI = axios.create({
         baseURL: `${baseUrl}/yearBill/`
     })
-    //登陆
+    //登录
     public async login(code: string): Promise<{
         token: string
         avatar: string
@@ -32,7 +32,7 @@ class _API {
                 nickName: data.data.nick_name
             }
         } else {
-            throw '登陆失败,请绑定桑梓微助手!'
+            throw '登录失败,请绑定桑梓微助手!'
         }
     }
     //!初始化用户数据 必须要初始化之后才能拿到数据
