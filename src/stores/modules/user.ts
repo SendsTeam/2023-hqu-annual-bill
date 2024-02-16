@@ -9,7 +9,7 @@ export const useUserStore = defineStore('UserStore', {
         user: new User()
     }),
     actions: {
-        //登陆
+        //登录
         async login(): Promise<boolean> {
             return await this.user.login()
         },

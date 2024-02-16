@@ -17,7 +17,7 @@ export class User {
     public avatar: string = ''
     public nickName: string = ''
     public code: string | null = null //这里的初始化由APP.vue完成
-    //登陆,返回是否登陆成功
+    //登录,返回是否登录成功
     public async login(): Promise<boolean> {
         try {
             //这里一定会有code!
